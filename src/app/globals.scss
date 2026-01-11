@@ -1,0 +1,737 @@
+// Bootstrap imported in layout.tsx
+
+:root {
+    // Myntra-style Light Theme
+    --myntra-bg: #ffffff;
+    --myntra-surface: #f5f5f6;
+    --myntra-accent: #ff3f6c;
+    --myntra-text: #282c3f;
+    --myntra-text-muted: #94969f;
+    --myntra-border: #d4d5d9;
+    --myntra-success: #03a685;
+    --myntra-orange: #ff905a;
+}
+
+body {
+    background-color: var(--myntra-bg);
+    color: var(--myntra-text);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    overflow-x: hidden;
+}
+
+// Custom Scrollbar
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--myntra-surface);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--myntra-border);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--myntra-accent);
+}
+
+// Navbar Styles
+.navbar-myntra {
+    background: var(--myntra-bg);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+}
+
+.nav-link-myntra {
+    color: var(--myntra-text) !important;
+    font-weight: 600;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    padding: 8px 16px !important;
+    position: relative;
+
+    &:hover {
+        color: var(--myntra-accent) !important;
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        width: 0;
+        height: 3px;
+        background: var(--myntra-accent);
+        transition: all 0.3s ease;
+        transform: translateX(-50%);
+    }
+
+    &:hover::after {
+        width: 100%;
+    }
+}
+
+// Search Bar
+.search-myntra {
+    background: #f5f5f6; // High visibility background
+    border: 2px solid #282c3f; // Thicker, darker border for maximum visibility
+    border-radius: 4px;
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    max-width: 600px;
+    height: 44px; // Slightly taller
+    transition: all 0.2s ease;
+
+    &:focus-within {
+        background: #ffffff;
+        border-color: #ff3f6c;
+        box-shadow: 0 0 8px rgba(255, 63, 108, 0.2);
+    }
+
+    input {
+        background: transparent;
+        border: none;
+        outline: none;
+        color: #000000 !important; // Pure black text
+        width: 100%;
+        font-size: 14px;
+        font-weight: 500;
+        margin-left: 12px;
+
+        &::placeholder {
+            color: #535766; // Darker placeholder
+            font-weight: 400;
+        }
+    }
+}
+
+// Product Card
+.product-card-myntra {
+    background: var(--myntra-bg);
+    border-radius: 0;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    cursor: pointer;
+
+    &:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        transform: translateY(-4px);
+    }
+
+    .product-image {
+        position: relative;
+        overflow: hidden;
+
+        img {
+            transition: transform 0.3s ease;
+        }
+
+        &:hover img {
+            transform: scale(1.05);
+        }
+    }
+
+    .product-info {
+        padding: 12px 10px;
+    }
+
+    .product-brand {
+        font-weight: 700;
+        font-size: 14px;
+        color: var(--myntra-text);
+        margin-bottom: 4px;
+    }
+
+    .product-name {
+        font-size: 14px;
+        color: var(--myntra-text-muted);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .product-price {
+        margin-top: 8px;
+
+        .price-current {
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--myntra-text);
+        }
+
+        .price-original {
+            text-decoration: line-through;
+            color: var(--myntra-text-muted);
+            font-size: 12px;
+            margin-left: 8px;
+        }
+
+        .price-discount {
+            color: var(--myntra-orange);
+            font-size: 12px;
+            margin-left: 8px;
+        }
+    }
+}
+
+// Hero Banner
+.hero-banner {
+    position: relative;
+    overflow: hidden;
+
+    img {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+    }
+}
+
+// Category Cards
+.category-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 4px;
+    cursor: pointer;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+
+    &:hover img {
+        transform: scale(1.05);
+    }
+
+    .category-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 20px;
+        background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+        color: white;
+
+        h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        p {
+            font-size: 12px;
+            margin: 0;
+            opacity: 0.9;
+        }
+    }
+}
+
+// Buttons
+.btn-myntra {
+    background: var(--myntra-accent);
+    border: none;
+    color: white;
+    padding: 12px 24px;
+    font-weight: 700;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+
+    &:hover {
+        background: #d32f5a;
+        color: white;
+    }
+}
+
+.btn-myntra-outline {
+    background: transparent;
+    border: 1px solid var(--myntra-border);
+    color: var(--myntra-text);
+    padding: 12px 24px;
+    font-weight: 700;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+
+    &:hover {
+        border-color: var(--myntra-accent);
+        color: var(--myntra-accent);
+    }
+}
+
+// Promo Banner
+.promo-banner {
+    background: linear-gradient(135deg, #ff3f6c 0%, #ff905a 100%);
+    color: white;
+    padding: 16px 24px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+}
+
+// Badge Styles
+.badge-myntra {
+    background: var(--myntra-accent);
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 4px 8px;
+    border-radius: 2px;
+    text-transform: uppercase;
+}
+
+// Section Headers
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--myntra-border);
+
+    h2 {
+        font-size: 24px;
+        font-weight: 700;
+        color: var(--myntra-text);
+        margin: 0;
+        text-transform: uppercase;
+    }
+
+    a {
+        color: var(--myntra-accent);
+        font-weight: 600;
+        font-size: 14px;
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+// Footer
+.footer-myntra {
+    background: var(--myntra-surface);
+    padding: 40px 0 24px;
+    margin-top: 60px;
+
+    .footer-heading {
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--myntra-text);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 16px;
+    }
+
+    .footer-link {
+        display: block;
+        color: var(--myntra-text-muted);
+        font-size: 14px;
+        margin-bottom: 8px;
+        text-decoration: none;
+
+        &:hover {
+            color: var(--myntra-text);
+        }
+    }
+
+    .footer-bottom {
+        border-top: 1px solid var(--myntra-border);
+        padding-top: 24px;
+        margin-top: 24px;
+        text-align: center;
+        color: var(--myntra-text-muted);
+        font-size: 12px;
+    }
+}
+
+// Modal Styles (Myntra)
+.modal-myntra {
+    .modal-content {
+        border-radius: 4px;
+        border: none;
+    }
+
+    .modal-header {
+        border-bottom: 1px solid var(--myntra-border);
+        padding: 16px 20px;
+
+        .modal-title {
+            font-weight: 700;
+            font-size: 16px;
+            color: var(--myntra-text);
+        }
+    }
+
+    .modal-body {
+        padding: 20px;
+    }
+}
+
+// Cart Sidebar
+.cart-sidebar {
+    background: var(--myntra-bg);
+    color: var(--myntra-text);
+}
+
+// Mobile Menu
+@media (max-width: 991.98px) {
+    .navbar-collapse {
+        background: var(--myntra-bg);
+        padding: 1rem;
+        margin-top: 10px;
+        border: 1px solid var(--myntra-border);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .search-myntra {
+        min-width: 100%;
+    }
+}
+
+// Utility Classes
+.text-accent {
+    color: var(--myntra-accent) !important;
+}
+
+.text-muted-myntra {
+    color: var(--myntra-text-muted) !important;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+
+    &:hover {
+        color: var(--myntra-accent);
+    }
+}
+
+// Social Icons
+.social-icon {
+    color: #282c3f;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+
+    &:hover {
+        background-color: #f5f5f6;
+        color: #ff3f6c !important;
+        transform: translateY(-2px);
+    }
+}
+
+// Button Active State
+.btn-myntra:active,
+.social-icon:active,
+.btn-link:active {
+    transform: scale(0.95);
+    opacity: 0.9;
+}
+
+.category-card:active,
+.product-card-myntra:active {
+    transform: scale(0.98);
+}
+
+// ====== MOBILE RESPONSIVE STYLES ======
+
+// Hero Banner Responsiveness
+// Hero Banner Responsiveness
+.hero-container {
+    height: 600px;
+
+    @media (max-width: 992px) {
+        height: 480px;
+    }
+
+    @media (max-width: 768px) {
+        height: 320px;
+    }
+
+    @media (max-width: 576px) {
+        height: 280px;
+    }
+}
+
+.hero-title {
+    font-size: 64px;
+    font-weight: 900;
+    color: #282c3f;
+    margin-bottom: 12px;
+    letter-spacing: -2px;
+
+    @media (max-width: 992px) {
+        font-size: 48px;
+    }
+
+    @media (max-width: 768px) {
+        font-size: 32px;
+        letter-spacing: -1px;
+    }
+
+    @media (max-width: 576px) {
+        font-size: 28px;
+    }
+}
+
+.hero-subtitle {
+    font-size: 28px;
+    color: #535766;
+    margin-bottom: 32px;
+
+    @media (max-width: 992px) {
+        font-size: 20px;
+    }
+
+    @media (max-width: 768px) {
+        font-size: 16px;
+        margin-bottom: 20px;
+    }
+
+    @media (max-width: 576px) {
+        font-size: 14px;
+        margin-bottom: 16px;
+    }
+}
+
+// Category Cards Responsiveness
+.category-card {
+    height: 420px;
+
+    @media (max-width: 1200px) {
+        height: 360px;
+    }
+
+    @media (max-width: 992px) {
+        height: 300px;
+    }
+
+    @media (max-width: 768px) {
+        height: 240px;
+    }
+
+    @media (max-width: 576px) {
+        height: 180px;
+    }
+}
+
+// Deal Cards
+.deal-card {
+    border-radius: 8px;
+    padding: 40px;
+    color: white;
+    height: 240px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: transform 0.2s ease;
+    margin-bottom: 0; // Reset margin for grid
+
+    &:hover {
+        transform: scale(1.02);
+    }
+
+    &.deal-fest {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+
+    &.deal-new {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    }
+
+    .deal-tag {
+        font-size: 14px;
+        font-weight: 700;
+        opacity: 0.9;
+        letter-spacing: 1px;
+    }
+
+    .deal-title {
+        font-size: 32px;
+        font-weight: 800;
+        margin: 8px 0;
+    }
+
+    .deal-desc {
+        font-size: 18px;
+        margin: 0;
+        opacity: 0.9;
+    }
+
+    @media (max-width: 992px) {
+        padding: 30px;
+        height: 200px;
+
+        .deal-title {
+            font-size: 24px;
+        }
+
+        .deal-desc {
+            font-size: 15px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        padding: 20px;
+        height: 160px;
+        margin-bottom: 16px;
+
+        .deal-title {
+            font-size: 20px;
+        }
+
+        .deal-desc {
+            font-size: 13px;
+        }
+    }
+}
+
+// Product Card Mobile Adjustments
+@media (max-width: 576px) {
+    .product-card-myntra {
+        .product-info {
+            padding: 8px;
+        }
+
+        .product-brand {
+            font-size: 12px;
+        }
+
+        .product-name {
+            font-size: 11px;
+        }
+
+        .product-price {
+            .price-current {
+                font-size: 12px;
+            }
+
+            .price-original {
+                font-size: 10px;
+            }
+
+            .price-discount {
+                font-size: 10px;
+            }
+        }
+
+        .btn-myntra {
+            padding: 8px;
+            font-size: 10px;
+        }
+    }
+
+    .section-header {
+        h2 {
+            font-size: 18px;
+        }
+
+        a {
+            font-size: 12px;
+        }
+    }
+
+    .promo-banner {
+        font-size: 12px;
+        padding: 10px 12px;
+    }
+}
+
+// Navigation Mobile Fixes
+@media (max-width: 991.98px) {
+    .navbar-myntra {
+        padding: 8px 0 !important;
+    }
+
+    .navbar-collapse {
+        max-height: calc(100vh - 60px);
+        overflow-y: auto;
+    }
+}
+
+// Footer Mobile Adjustments
+@media (max-width: 576px) {
+    .footer-myntra {
+        padding: 24px 0 16px;
+        margin-top: 40px;
+
+        .footer-heading {
+            font-size: 11px;
+            margin-bottom: 12px;
+        }
+
+        .footer-link {
+            font-size: 12px;
+            margin-bottom: 6px;
+        }
+
+        .footer-bottom {
+            font-size: 10px;
+            padding-top: 16px;
+            margin-top: 16px;
+        }
+    }
+
+    .social-icon {
+        width: 28px;
+        height: 28px;
+    }
+}
+
+// Ensure modals don't overflow on mobile
+.modal-dialog {
+    margin: 16px !important;
+    max-height: calc(100vh - 32px);
+}
+
+.modal-body {
+    max-height: calc(100dvh - 150px);
+    overflow-y: auto;
+}
+
+// Category page mobile title fix
+@media (max-width: 576px) {
+    .display-4 {
+        font-size: 1.75rem !important;
+    }
+}
+
+// Mobile Search Bar Improvements
+@media (max-width: 991.98px) {
+    .search-myntra {
+        width: 100%;
+        max-width: 100%;
+        height: 40px;
+        padding: 8px 12px;
+
+        input {
+            font-size: 13px;
+
+            &::placeholder {
+                font-size: 13px;
+            }
+        }
+    }
+}
+
+// Mobile Icon Bar Styling
+@media (max-width: 991.98px) {
+    .navbar-brand {
+        flex: 1;
+    }
+}

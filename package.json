@@ -1,0 +1,33 @@
+{
+  "name": "modern-shop",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "dev:https": "node server.js",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "bootstrap": "^5.3.8",
+    "firebase": "^12.7.0",
+    "framer-motion": "^12.23.26",
+    "lucide-react": "^0.561.0",
+    "next": "16.0.10",
+    "react": "19.2.1",
+    "react-bootstrap": "^2.10.10",
+    "react-dom": "19.2.1",
+    "sass": "^1.96.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.0.10",
+    "pem": "^1.14.8",
+    "selfsigned": "^5.2.0",
+    "typescript": "^5"
+  }
+}
