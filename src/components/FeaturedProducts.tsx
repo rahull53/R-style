@@ -5,6 +5,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Link from 'next/link';
 import { useCart } from '@/context/CartContext';
+import { useUI } from '@/context/UIContext';
 import { motion } from 'framer-motion';
 
 import { products } from '@/data/products';
@@ -13,6 +14,7 @@ import ProductCard from './ProductCard';
 
 export default function FeaturedProducts() {
     const { addToCart, addToWishlist, wishlistItems, removeFromWishlist } = useCart();
+    const { setIsCartOpen } = useUI();
 
     return (
         <div style={{ backgroundColor: '#000000', color: '#ffffff' }}>
@@ -32,8 +34,6 @@ export default function FeaturedProducts() {
 
                 <Row className="g-3">
                     {products.map((product) => {
-                        const isWishlisted = wishlistItems.some(item => item.id === product.id);
-
                         return (
                             <Col key={product.id} xl={3} lg={4} md={6} sm={12} className="mb-4">
                                 <ProductCard
@@ -43,25 +43,16 @@ export default function FeaturedProducts() {
                                     price={product.price}
                                     image={product.image}
                                     tag={product.tag}
-                                    isWishlisted={isWishlisted}
-                                    onAddToCart={() => addToCart({
-                                        id: product.id,
-                                        name: product.name,
-                                        price: `₹${product.price}`,
-                                        image: product.image,
-                                        brand: product.brand
-                                    })}
-                                    onToggleWishlist={() =>
-                                        isWishlisted
-                                            ? removeFromWishlist(product.id)
-                                            : addToWishlist({
-                                                id: product.id,
-                                                name: product.name,
-                                                price: `₹${product.price}`,
-                                                image: product.image,
-                                                brand: product.brand
-                                            })
-                                    }
+                                    onAddToCart={() => {
+                                        addToCart({
+                                            id: product.id,
+                                            name: product.name,
+                                            price: `₹${product.price}`,
+                                            image: product.image,
+                                            brand: product.brand
+                                        });
+                                        setIsCartOpen(true);
+                                    }}
                                 />
                             </Col>
                         );

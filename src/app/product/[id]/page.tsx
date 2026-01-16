@@ -9,14 +9,17 @@ import Button from 'react-bootstrap/Button';
 import Navigation from '@/components/Navigation';
 import { ArrowLeft, Star, ShoppingBag, Heart, Truck } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import { useCart } from '@/context/CartContext';
+import { useUI } from '@/context/UIContext';
 import { products } from '@/data/products';
 
 export default function ProductPage() {
     const params = useParams();
     const productId = params.id as string;
     const { addToCart, addToWishlist, wishlistItems, removeFromWishlist } = useCart();
+    const { setIsCartOpen } = useUI();
     const [selectedSize, setSelectedSize] = useState<string | null>(null);
 
     // Find product by ID
@@ -56,12 +59,17 @@ export default function ProductPage() {
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
-                            overflow: 'hidden'
+                            overflow: 'hidden',
+                            position: 'relative'
                         }}>
-                            <img
+                            <Image
                                 src={product.image}
                                 alt={product.name}
-                                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                fill
+                                sizes="(max-width: 1024px) 100vw, 50vw"
+                                style={{ objectFit: 'cover' }}
+                                priority
+                                quality={75}
                             />
                         </div>
                     </Col>
@@ -165,13 +173,16 @@ export default function ProductPage() {
                                         letterSpacing: '0.5px',
                                         flex: 1
                                     }}
-                                    onClick={() => addToCart({
-                                        id: Number(productId),
-                                        name: product.name,
-                                        price: `₹${product.price}`,
-                                        image: product.image,
-                                        size: selectedSize || undefined
-                                    })}
+                                    onClick={() => {
+                                        addToCart({
+                                            id: Number(productId),
+                                            name: product.name,
+                                            price: `₹${product.price}`,
+                                            image: product.image,
+                                            size: selectedSize || undefined
+                                        });
+                                        setIsCartOpen(true);
+                                    }}
                                     suppressHydrationWarning
                                 >
                                     <ShoppingBag size={18} className="me-2" /> ADD TO BAG

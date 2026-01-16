@@ -17,9 +17,13 @@ const nextConfig: NextConfig = {
         hostname: 'images.unsplash.com',
       },
     ],
-    minimumCacheTTL: 60,
+    minimumCacheTTL: 3600, // Increased to 1 hour
+    qualities: [65, 75, 85, 100],
     dangerouslyAllowSVG: true,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+  },
+  experimental: {
+    optimizePackageImports: ['lucide-react', 'react-bootstrap', 'framer-motion'],
   },
   poweredByHeader: false,
   reactStrictMode: true,

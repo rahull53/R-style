@@ -133,6 +133,7 @@ export default function HeroBento() {
                                                 sizes="(max-width: 640px) 50vw, 300px"
                                                 quality={65}
                                                 style={{ objectFit: 'cover' }}
+                                                priority={idx < 2}
                                             />
                                             <div className="category-overlay">
                                                 <h3 style={{ color: '#ffffff' }}>{category.name}</h3>

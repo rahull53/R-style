@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { saveUserWithMobile } from '@/lib/db/user';
+import { useAsyncStorage } from '@/hooks/useAsyncStorage';
 
 export interface User {
     mobile: string;
@@ -24,15 +25,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const [user, setUser] = useState<User | null>(null);
     const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
+    const { setItemAsync, getItem } = useAsyncStorage();
 
     // Load user from localStorage on mount
     useEffect(() => {
-        const savedUser = localStorage.getItem('r_style_user');
+        const savedUser = getItem('r_style_user');
         if (savedUser) {
-            setUser(JSON.parse(savedUser));
+            setUser(savedUser);
         }
         setIsLoading(false);
-    }, []);
+    }, [getItem]);
 
     const login = (mobile: string, name?: string, uid?: string) => {
         const newUser: User = {
@@ -41,8 +43,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             isVerified: true
         };
         setUser(newUser);
-        localStorage.setItem('r_style_user', JSON.stringify(newUser));
-        if (uid) localStorage.setItem('r_style_uid', uid);
+        setItemAsync('r_style_user', newUser);
+        if (uid) setItemAsync('r_style_uid', uid);
         // Save to Firestore (Async - don't await to keep UI snappy)
         saveUserWithMobile(mobile, name);
 
@@ -51,7 +53,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     const logout = () => {
         setUser(null);
-        localStorage.removeItem('r_style_user');
+        setItemAsync('r_style_user', null);
+        setItemAsync('r_style_uid', null);
     };
 
     return (

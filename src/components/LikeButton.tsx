@@ -1,21 +1,48 @@
-'use client';
-
 import React from 'react';
 import styled from 'styled-components';
+import { useCart } from '@/context/CartContext';
 
 interface LikeButtonProps {
-    isLiked: boolean;
-    onToggle: () => void;
+    productId: number;
+    productData: {
+        id: number;
+        name: string;
+        price: string;
+        image?: string;
+        brand?: string;
+    };
 }
 
-const LikeButton: React.FC<LikeButtonProps> = ({ isLiked, onToggle }) => {
+const LikeButton: React.FC<LikeButtonProps> = React.memo(({ productId, productData }) => {
+    const { wishlistItems, addToWishlist, removeFromWishlist } = useCart();
+    const isLiked = wishlistItems.some(item => item.id === productId);
+
+    // Optimistic UI state
+    const [localIsLiked, setLocalIsLiked] = React.useState(isLiked);
+
+    // Sync with prop when it changes from external source (e.g. from WishlistModal)
+    React.useEffect(() => {
+        setLocalIsLiked(isLiked);
+    }, [isLiked]);
+
+    const handleToggle = (e: React.MouseEvent | React.ChangeEvent) => {
+        const newValue = !localIsLiked;
+        setLocalIsLiked(newValue); // Instant feedback
+
+        if (isLiked) {
+            removeFromWishlist(productId);
+        } else {
+            addToWishlist(productData);
+        }
+    };
+
     return (
         <StyledWrapper>
             <label className="ui-bookmark" onClick={(e) => e.stopPropagation()}>
                 <input
                     type="checkbox"
-                    checked={isLiked}
-                    onChange={onToggle}
+                    checked={localIsLiked}
+                    onChange={handleToggle}
                 />
                 <div className="bookmark">
                     <svg viewBox="0 0 16 16" style={{ marginTop: 4 }} className="bi bi-heart-fill" height={25} width={25} xmlns="http://www.w3.org/2000/svg">
@@ -25,7 +52,9 @@ const LikeButton: React.FC<LikeButtonProps> = ({ isLiked, onToggle }) => {
             </label>
         </StyledWrapper>
     );
-};
+});
+
+LikeButton.displayName = 'LikeButton';
 
 const StyledWrapper = styled.div`
     .ui-bookmark {

@@ -10,12 +10,14 @@ import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 import { useParams } from 'next/navigation';
 import { useCart } from '@/context/CartContext';
+import { useUI } from '@/context/UIContext';
 import { products } from '@/data/products';
 import Footer from '@/components/Footer';
 
 export default function CategoryPage() {
     const params = useParams();
     const { addToCart, addToWishlist, wishlistItems, removeFromWishlist } = useCart();
+    const { setIsCartOpen } = useUI();
 
     const slug = params.slug as string;
     const categoryName = decodeURIComponent(slug).toUpperCase();
@@ -51,8 +53,6 @@ export default function CategoryPage() {
 
                 <Row className="g-4">
                     {filteredProducts.map((product) => {
-                        const isWishlisted = wishlistItems.some(item => item.id === product.id);
-
                         return (
                             <Col key={product.id} lg={3} md={4} sm={6} xs={12}>
                                 <ProductCard
@@ -62,25 +62,16 @@ export default function CategoryPage() {
                                     price={product.price}
                                     image={product.image}
                                     tag={product.tag}
-                                    isWishlisted={isWishlisted}
-                                    onAddToCart={() => addToCart({
-                                        id: product.id,
-                                        name: product.name,
-                                        price: `₹${product.price}`,
-                                        image: product.image,
-                                        brand: product.brand
-                                    })}
-                                    onToggleWishlist={() =>
-                                        isWishlisted
-                                            ? removeFromWishlist(product.id)
-                                            : addToWishlist({
-                                                id: product.id,
-                                                name: product.name,
-                                                price: `₹${product.price}`,
-                                                image: product.image,
-                                                brand: product.brand
-                                            })
-                                    }
+                                    onAddToCart={() => {
+                                        addToCart({
+                                            id: product.id,
+                                            name: product.name,
+                                            price: `₹${product.price}`,
+                                            image: product.image,
+                                            brand: product.brand
+                                        });
+                                        setIsCartOpen(true);
+                                    }}
                                 />
                             </Col>
                         );

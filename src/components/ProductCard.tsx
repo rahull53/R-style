@@ -14,21 +14,17 @@ interface ProductCardProps {
     price: number;
     image: string;
     tag?: string;
-    isWishlisted?: boolean;
     onAddToCart: () => void;
-    onToggleWishlist: () => void;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({
+const ProductCard: React.FC<ProductCardProps> = React.memo(({
     id,
     name,
     brand,
     price,
     image,
     tag,
-    isWishlisted = false,
     onAddToCart,
-    onToggleWishlist,
 }) => {
     return (
         <StyledWrapper>
@@ -41,8 +37,14 @@ const ProductCard: React.FC<ProductCardProps> = ({
                     {/* Animated Wishlist Button */}
                     <div className="card__wishlist">
                         <LikeButton
-                            isLiked={isWishlisted}
-                            onToggle={onToggleWishlist}
+                            productId={id}
+                            productData={{
+                                id,
+                                name,
+                                price: `₹${price}`,
+                                image,
+                                brand
+                            }}
                         />
                     </div>
 
@@ -55,6 +57,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
                                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 300px"
                                 quality={65}
                                 style={{ objectFit: 'cover' }}
+                                priority={id <= 4} // Priority for top products
                             />
                         </div>
                         <div className="card__text">
@@ -80,7 +83,9 @@ const ProductCard: React.FC<ProductCardProps> = ({
             </div>
         </StyledWrapper>
     );
-};
+});
+
+ProductCard.displayName = 'ProductCard';
 
 const StyledWrapper = styled.div`
     .card {

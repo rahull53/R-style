@@ -6,33 +6,54 @@ import Navbar from 'react-bootstrap/Navbar';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Search, ShoppingBag, User, Heart, Menu } from 'lucide-react';
-import { useEffect, useState } from 'react';
-
+import React, { useEffect, useState, memo } from 'react';
 import { useCart } from '@/context/CartContext';
+import { useUI } from '@/context/UIContext';
 import { useAuth } from '@/context/AuthContext';
+
+// Memoized Badge Sub-components
+const WishlistBadge = memo(({ mounted }: { mounted: boolean }) => {
+    const { wishlistItems } = useCart();
+    if (!mounted || wishlistItems.length === 0) return null;
+    return (
+        <span className="position-absolute badge-myntra" style={{ top: '-8px', right: '-8px', borderRadius: '50%', padding: '2px 6px', background: '#ff3f6c', color: 'white', fontSize: '10px' }}>
+            {wishlistItems.length}
+        </span>
+    );
+});
+WishlistBadge.displayName = 'WishlistBadge';
+
+const CartBadge = memo(({ mounted }: { mounted: boolean }) => {
+    const { cartItems } = useCart();
+    if (!mounted || cartItems.length === 0) return null;
+    return (
+        <span className="position-absolute badge-myntra" style={{ top: '-8px', right: '-8px', borderRadius: '50%', padding: '2px 6px' }}>
+            {cartItems.length}
+        </span>
+    );
+});
+CartBadge.displayName = 'CartBadge';
 
 export default function Navigation() {
     const [scrolled, setScrolled] = useState(false);
     const [mounted, setMounted] = useState(false);
+
     const {
         setIsSearchOpen,
         setIsCartOpen,
-        cartItems,
         setIsWishlistOpen,
-        wishlistItems,
         setIsProfileOpen,
-        isCheckoutOpen,
-        setIsCheckoutOpen
-    } = useCart();
+    } = useUI();
 
     const { user, setIsAuthModalOpen } = useAuth();
 
     useEffect(() => {
         setMounted(true);
         const handleScroll = () => {
-            setScrolled(window.scrollY > 50);
+            const isScrolled = window.scrollY > 50;
+            setScrolled(prev => prev !== isScrolled ? isScrolled : prev);
         };
-        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('scroll', handleScroll, { passive: true });
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
@@ -66,19 +87,11 @@ export default function Navigation() {
                 <div className="d-flex d-lg-none align-items-center gap-3">
                     <div onClick={() => setIsWishlistOpen(true)} className="position-relative">
                         <Heart size={22} color="#ffffff" />
-                        {mounted && wishlistItems.length > 0 && (
-                            <span className="position-absolute badge-myntra mobile-badge" style={{ top: '-5px', right: '-5px', background: '#ff3f6c', color: 'white', fontSize: '9px', padding: '1px 5px', borderRadius: '50%' }}>
-                                {wishlistItems.length}
-                            </span>
-                        )}
+                        <WishlistBadge mounted={mounted} />
                     </div>
                     <div onClick={() => setIsCartOpen(true)} className="position-relative">
                         <ShoppingBag size={22} color="#ffffff" />
-                        {mounted && cartItems.length > 0 && (
-                            <span className="position-absolute badge-myntra mobile-badge" style={{ top: '-5px', right: '-5px', background: '#ff3f6c', color: 'white', fontSize: '9px', padding: '1px 5px', borderRadius: '50%' }}>
-                                {cartItems.length}
-                            </span>
-                        )}
+                        <CartBadge mounted={mounted} />
                     </div>
                 </div>
 
@@ -124,20 +137,12 @@ export default function Navigation() {
                         <div className="text-center position-relative" style={{ cursor: 'pointer' }} onClick={() => setIsWishlistOpen(true)}>
                             <Heart size={20} color="#ffffff" />
                             <div style={{ fontSize: '11px', fontWeight: 600, color: '#ffffff' }}>Wishlist</div>
-                            {mounted && wishlistItems.length > 0 && (
-                                <span className="position-absolute badge-myntra" style={{ top: '-8px', right: '-8px', borderRadius: '50%', padding: '2px 6px', background: '#ff3f6c', color: 'white', fontSize: '10px' }}>
-                                    {wishlistItems.length}
-                                </span>
-                            )}
+                            <WishlistBadge mounted={mounted} />
                         </div>
                         <div className="text-center position-relative" style={{ cursor: 'pointer' }} onClick={() => setIsCartOpen(true)}>
                             <ShoppingBag size={20} color="#ffffff" />
                             <div style={{ fontSize: '11px', fontWeight: 600, color: '#ffffff' }}>Bag</div>
-                            {mounted && cartItems.length > 0 && (
-                                <span className="position-absolute badge-myntra" style={{ top: '-8px', right: '-8px', borderRadius: '50%', padding: '2px 6px' }}>
-                                    {cartItems.length}
-                                </span>
-                            )}
+                            <CartBadge mounted={mounted} />
                         </div>
                     </div>
 

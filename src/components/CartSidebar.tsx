@@ -2,11 +2,13 @@
 
 import { X, Trash2, ShoppingBag, Plus, Minus } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
+import { useUI } from '@/context/UIContext';
 import Button from 'react-bootstrap/Button';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function CartSidebar() {
-    const { cartItems, removeFromCart, updateQuantity, isCartOpen, setIsCartOpen, setIsCheckoutOpen } = useCart();
+    const { cartItems, removeFromCart, updateQuantity } = useCart();
+    const { isCartOpen, setIsCartOpen, setIsCheckoutOpen } = useUI();
 
     const total = cartItems.reduce((acc, item) => {
         const priceStr = item.price.replace('₹', '').replace('$', '').replace(',', '');

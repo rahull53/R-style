@@ -2,10 +2,12 @@
 
 import { X, Trash2, Heart, ShoppingBag } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
+import { useUI } from '@/context/UIContext';
 import Button from 'react-bootstrap/Button';
 
 export default function WishlistModal() {
-    const { wishlistItems, removeFromWishlist, addToCart, isWishlistOpen, setIsWishlistOpen } = useCart();
+    const { wishlistItems, removeFromWishlist, addToCart } = useCart();
+    const { isWishlistOpen, setIsWishlistOpen } = useUI();
 
     if (!isWishlistOpen) return null;
 

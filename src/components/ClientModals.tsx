@@ -10,9 +10,10 @@ const WishlistModal = dynamic(() => import("@/components/WishlistModal"), { ssr:
 const ProfileModal = dynamic(() => import("@/components/ProfileModal"), { ssr: false });
 
 import { useCart } from '@/context/CartContext';
+import { useUI } from '@/context/UIContext';
 
 export default function ClientModals() {
-    const { isCheckoutOpen, setIsCheckoutOpen } = useCart();
+    const { isCheckoutOpen, setIsCheckoutOpen } = useUI();
 
     return (
         <>

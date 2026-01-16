@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./globals.scss";
 import { CartProvider } from "@/context/CartContext";
+import { UIProvider } from "@/context/UIContext";
 import { AuthProvider } from "@/context/AuthContext";
 import ClientModals from "@/components/ClientModals";
 
@@ -22,10 +23,12 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className} suppressHydrationWarning>
         <AuthProvider>
-          <CartProvider>
-            {children}
-            <ClientModals />
-          </CartProvider>
+          <UIProvider>
+            <CartProvider>
+              {children}
+              <ClientModals />
+            </CartProvider>
+          </UIProvider>
         </AuthProvider>
       </body>
     </html>
