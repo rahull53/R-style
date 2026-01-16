@@ -2,7 +2,7 @@
 
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
-import { useCart } from '@/context/CartContext';
+import { useUI } from '@/context/UIContext';
 import { Search, X } from 'lucide-react';
 import { useState } from 'react';
 import Link from 'next/link';
@@ -12,7 +12,7 @@ import { products } from '@/data/products';
 
 
 export default function SearchModal() {
-    const { isSearchOpen, setIsSearchOpen } = useCart();
+    const { isSearchOpen, setIsSearchOpen } = useUI();
     const [query, setQuery] = useState('');
 
     const filtered = query === '' ? [] : products.filter(item =>
