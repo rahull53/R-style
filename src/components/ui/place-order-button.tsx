@@ -13,7 +13,7 @@ const PlaceOrderButton = ({ onOrderPlaced }: PlaceOrderButtonProps) => {
       // Wait for animation to complete before calling callback
       setTimeout(() => {
         onOrderPlaced();
-      }, 6000);
+      }, 2000);
     }
   };
 
@@ -392,7 +392,7 @@ const StyledWrapper = styled.div`
 
   .package-container {
     transform: translate(0%, 100%);
-    animation: package 6s;
+    animation: package 2s;
     animation-iteration-count: 1;
     animation-fill-mode: forwards;
     animation-play-state: paused;
@@ -400,7 +400,7 @@ const StyledWrapper = styled.div`
 
   .done {
     transform: translate(-310%);
-    animation: text2 6s;
+    animation: text2 2s;
     animation-iteration-count: 1;
     animation-fill-mode: forwards;
     animation-play-state: paused;
@@ -408,7 +408,7 @@ const StyledWrapper = styled.div`
 
   .order {
     transform: translate(0%, 0%);
-    animation: text 6s;
+    animation: text 2s;
     animation-iteration-count: 1;
     animation-fill-mode: forwards;
     animation-play-state: paused;
@@ -416,7 +416,7 @@ const StyledWrapper = styled.div`
 
   .car-container {
     transform: translate(-310%, 8%);
-    animation: car 6s ease;
+    animation: car 2s ease;
     animation-iteration-count: 1;
     animation-fill-mode: forwards;
     animation-play-state: paused;
