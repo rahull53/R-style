@@ -8,19 +8,23 @@ interface PlaceOrderButtonProps {
 }
 
 const PlaceOrderButton = ({ onOrderPlaced }: PlaceOrderButtonProps) => {
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.checked && onOrderPlaced) {
-      // Wait for animation to complete before calling callback
+  const [status, setStatus] = React.useState<'initial' | 'animating' | 'done'>('initial');
+
+  const handleClick = (e: React.MouseEvent) => {
+    if (status === 'initial') {
+      setStatus('animating');
       setTimeout(() => {
-        onOrderPlaced();
-      }, 2000);
+        setStatus('done');
+      }, 2000); // match animation duration
+    } else if (status === 'done') {
+      onOrderPlaced?.();
     }
   };
 
   return (
     <StyledWrapper>
-      <div className="container">
-        <input type="checkbox" id="trigger" onChange={handleChange} />
+      <div className="container" onClick={handleClick}>
+        <input type="checkbox" id="trigger" checked={status !== 'initial'} readOnly />
         <label htmlFor="trigger" className="btn">
           <div className="stars" />
           <div className="background" />

@@ -10,11 +10,6 @@ import { useEffect, useState } from 'react';
 
 import { useCart } from '@/context/CartContext';
 import { useAuth } from '@/context/AuthContext';
-import WishlistModal from './WishlistModal';
-import ProfileModal from './ProfileModal';
-import CartSidebar from './CartSidebar';
-import SearchModal from './SearchModal';
-import CheckoutModal from './CheckoutModal';
 
 export default function Navigation() {
     const [scrolled, setScrolled] = useState(false);
@@ -183,12 +178,6 @@ export default function Navigation() {
                 </Navbar.Collapse>
             </Container>
 
-            {/* Modals and Sidebars */}
-            <CartSidebar />
-            <WishlistModal />
-            <ProfileModal />
-            <SearchModal />
-            <CheckoutModal show={isCheckoutOpen} onHide={() => setIsCheckoutOpen(false)} />
         </Navbar>
     );
 }

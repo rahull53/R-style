@@ -130,6 +130,8 @@ export default function HeroBento() {
                                                 src={category.image}
                                                 alt={category.name}
                                                 fill
+                                                sizes="(max-width: 640px) 50vw, 300px"
+                                                quality={65}
                                                 style={{ objectFit: 'cover' }}
                                             />
                                             <div className="category-overlay">

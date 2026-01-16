@@ -52,7 +52,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
                                 src={image}
                                 alt={name}
                                 fill
-                                sizes="(max-width: 768px) 100vw, 190px"
+                                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 300px"
+                                quality={65}
                                 style={{ objectFit: 'cover' }}
                             />
                         </div>
