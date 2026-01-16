@@ -8,6 +8,7 @@ const AuthModal = dynamic(() => import("@/components/AuthModal"), { ssr: false }
 const CheckoutModal = dynamic(() => import("@/components/CheckoutModal"), { ssr: false });
 const WishlistModal = dynamic(() => import("@/components/WishlistModal"), { ssr: false });
 const ProfileModal = dynamic(() => import("@/components/ProfileModal"), { ssr: false });
+const MobileMenu = dynamic(() => import("@/components/MobileMenu"), { ssr: false });
 
 import { useCart } from '@/context/CartContext';
 import { useUI } from '@/context/UIContext';
@@ -22,6 +23,7 @@ export default function ClientModals() {
             <AuthModal />
             <WishlistModal />
             <ProfileModal />
+            <MobileMenu />
             <CheckoutModal show={isCheckoutOpen} onHide={() => setIsCheckoutOpen(false)} />
         </>
     );

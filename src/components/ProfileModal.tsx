@@ -3,10 +3,11 @@
 import { X, User, ShoppingBag, Settings, LogOut, Heart } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 import { useAuth } from '@/context/AuthContext';
+import { useUI } from '@/context/UIContext';
 import Button from 'react-bootstrap/Button';
 
 export default function ProfileModal() {
-    const { isProfileOpen, setIsProfileOpen, setIsWishlistOpen, setIsCartOpen } = useCart();
+    const { isProfileOpen, setIsProfileOpen, setIsWishlistOpen, setIsCartOpen } = useUI();
     const { user, logout } = useAuth();
 
     if (!isProfileOpen) return null;

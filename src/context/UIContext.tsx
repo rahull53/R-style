@@ -13,6 +13,8 @@ interface UIContextType {
     setIsProfileOpen: (isOpen: boolean) => void;
     isCheckoutOpen: boolean;
     setIsCheckoutOpen: (isOpen: boolean) => void;
+    isMenuOpen: boolean;
+    setIsMenuOpen: (isOpen: boolean) => void;
 }
 
 const UIContext = createContext<UIContextType | undefined>(undefined);
@@ -23,6 +25,7 @@ export function UIProvider({ children }: { children: ReactNode }) {
     const [isWishlistOpen, setIsWishlistOpen] = useState(false);
     const [isProfileOpen, setIsProfileOpen] = useState(false);
     const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const value = useMemo(() => ({
         isCartOpen,
@@ -34,8 +37,10 @@ export function UIProvider({ children }: { children: ReactNode }) {
         isProfileOpen,
         setIsProfileOpen,
         isCheckoutOpen,
-        setIsCheckoutOpen
-    }), [isCartOpen, isSearchOpen, isWishlistOpen, isProfileOpen, isCheckoutOpen]);
+        setIsCheckoutOpen,
+        isMenuOpen,
+        setIsMenuOpen
+    }), [isCartOpen, isSearchOpen, isWishlistOpen, isProfileOpen, isCheckoutOpen, isMenuOpen]);
 
     return (
         <UIContext.Provider value={value}>
