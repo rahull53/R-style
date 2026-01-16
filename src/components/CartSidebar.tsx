@@ -49,24 +49,26 @@ export default function CartSidebar() {
                             maxWidth: '100%',
                             height: '100dvh',
                             maxHeight: '-webkit-fill-available',
-                            background: '#ffffff',
+                            background: '#111111',
                             zIndex: 1050,
                             display: 'flex',
                             flexDirection: 'column',
-                            boxShadow: '-4px 0 20px rgba(0,0,0,0.15)',
-                            paddingBottom: 'env(safe-area-inset-bottom, 0)'
+                            boxShadow: '-4px 0 30px rgba(0,0,0,0.5)',
+                            paddingBottom: 'env(safe-area-inset-bottom, 0)',
+                            borderLeft: '1px solid rgba(255, 63, 108, 0.2)'
                         }}
                     >
                         {/* Header */}
                         <div style={{
                             padding: '20px',
-                            borderBottom: '1px solid #d4d5d9',
+                            borderBottom: '1px solid rgba(255, 63, 108, 0.1)',
                             display: 'flex',
                             justifyContent: 'space-between',
-                            alignItems: 'center'
+                            alignItems: 'center',
+                            background: '#1a1a1a'
                         }}>
-                            <h5 style={{ margin: 0, fontWeight: 700, color: '#282c3f' }}>
-                                <ShoppingBag size={20} style={{ marginRight: '8px' }} />
+                            <h5 style={{ margin: 0, fontWeight: 700, color: '#ffffff' }}>
+                                <ShoppingBag size={20} style={{ marginRight: '8px', color: '#ff3f6c' }} />
                                 Shopping Bag ({cartItems.reduce((sum, item) => sum + item.quantity, 0)})
                             </h5>
                             <button
@@ -78,7 +80,7 @@ export default function CartSidebar() {
                                     padding: '4px'
                                 }}
                             >
-                                <X size={24} color="#282c3f" />
+                                <X size={24} color="#ffffff" />
                             </button>
                         </div>
 
@@ -91,16 +93,16 @@ export default function CartSidebar() {
                                     style={{
                                         textAlign: 'center',
                                         padding: '48px 20px',
-                                        color: '#94969f'
+                                        color: '#aaaaaa'
                                     }}
                                 >
-                                    <ShoppingBag size={48} style={{ marginBottom: '16px', opacity: 0.5 }} />
-                                    <p style={{ fontWeight: 600 }}>Your bag is empty!</p>
+                                    <ShoppingBag size={48} color="#ff3f6c" style={{ marginBottom: '16px', opacity: 0.3 }} />
+                                    <p style={{ fontWeight: 600, color: '#ffffff' }}>Your bag is empty!</p>
                                     <p style={{ fontSize: '14px' }}>Add items to start shopping</p>
                                 </motion.div>
                             ) : (
                                 <AnimatePresence mode="popLayout">
-                                    {cartItems.map((item, idx) => (
+                                    {cartItems.map((item) => (
                                         <motion.div
                                             layout
                                             initial={{ opacity: 0, x: 20 }}
@@ -111,13 +113,13 @@ export default function CartSidebar() {
                                                 display: 'flex',
                                                 gap: '12px',
                                                 padding: '16px 0',
-                                                borderBottom: '1px solid #f5f5f6'
+                                                borderBottom: '1px solid rgba(255, 255, 255, 0.05)'
                                             }}
                                         >
                                             <div style={{
                                                 width: '80px',
                                                 height: '100px',
-                                                background: '#f5f5f6',
+                                                background: '#1a1a1a',
                                                 borderRadius: '4px',
                                                 overflow: 'hidden'
                                             }}>
@@ -133,7 +135,7 @@ export default function CartSidebar() {
                                                 <h6 style={{
                                                     margin: '0 0 4px',
                                                     fontWeight: 600,
-                                                    color: '#282c3f',
+                                                    color: '#ffffff',
                                                     fontSize: '14px'
                                                 }}>
                                                     {item.name}
@@ -141,7 +143,7 @@ export default function CartSidebar() {
                                                 <p style={{
                                                     margin: '0 0 8px',
                                                     fontWeight: 700,
-                                                    color: '#282c3f'
+                                                    color: '#ff3f6c'
                                                 }}>
                                                     {item.price}
                                                 </p>
@@ -152,8 +154,8 @@ export default function CartSidebar() {
                                                         style={{
                                                             width: '28px',
                                                             height: '28px',
-                                                            background: '#f5f5f6',
-                                                            border: '1px solid #d4d5d9',
+                                                            background: '#1a1a1a',
+                                                            border: '1px solid #333',
                                                             borderRadius: '4px',
                                                             display: 'flex',
                                                             alignItems: 'center',
@@ -163,16 +165,16 @@ export default function CartSidebar() {
                                                         }}
                                                         disabled={item.quantity <= 1}
                                                     >
-                                                        <Minus size={14} color="#282c3f" />
+                                                        <Minus size={14} color="#ffffff" />
                                                     </button>
-                                                    <span style={{ fontWeight: 600, minWidth: '20px', textAlign: 'center' }}>{item.quantity}</span>
+                                                    <span style={{ fontWeight: 600, minWidth: '20px', textAlign: 'center', color: '#ffffff' }}>{item.quantity}</span>
                                                     <button
                                                         onClick={() => updateQuantity(item.id, 1)}
                                                         style={{
                                                             width: '28px',
                                                             height: '28px',
-                                                            background: '#f5f5f6',
-                                                            border: '1px solid #d4d5d9',
+                                                            background: '#1a1a1a',
+                                                            border: '1px solid #333',
                                                             borderRadius: '4px',
                                                             display: 'flex',
                                                             alignItems: 'center',
@@ -182,7 +184,7 @@ export default function CartSidebar() {
                                                         }}
                                                         disabled={item.quantity >= 10}
                                                     >
-                                                        <Plus size={14} color="#282c3f" />
+                                                        <Plus size={14} color="#ffffff" />
                                                     </button>
                                                 </div>
                                                 <button
@@ -214,8 +216,8 @@ export default function CartSidebar() {
                             <div style={{
                                 padding: '16px 20px',
                                 paddingBottom: 'max(16px, env(safe-area-inset-bottom, 16px))',
-                                borderTop: '1px solid #d4d5d9',
-                                background: '#ffffff',
+                                borderTop: '1px solid rgba(255, 63, 108, 0.2)',
+                                background: '#111111',
                                 flexShrink: 0
                             }}>
                                 <div style={{
@@ -223,8 +225,8 @@ export default function CartSidebar() {
                                     justifyContent: 'space-between',
                                     marginBottom: '16px'
                                 }}>
-                                    <span style={{ color: '#94969f', fontWeight: 600 }}>Total</span>
-                                    <span style={{ color: '#282c3f', fontWeight: 700, fontSize: '18px' }}>₹{total}</span>
+                                    <span style={{ color: '#aaaaaa', fontWeight: 600 }}>Total</span>
+                                    <span style={{ color: '#ff3f6c', fontWeight: 700, fontSize: '18px' }}>₹{total}</span>
                                 </div>
                                 <Button
                                     className="btn-myntra w-100"

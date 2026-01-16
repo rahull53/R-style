@@ -4,43 +4,43 @@ import React from 'react';
 import styled from 'styled-components';
 
 interface PlaceOrderButtonProps {
-    onOrderPlaced?: () => void;
+  onOrderPlaced?: () => void;
 }
 
 const PlaceOrderButton = ({ onOrderPlaced }: PlaceOrderButtonProps) => {
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.checked && onOrderPlaced) {
-            // Wait for animation to complete before calling callback
-            setTimeout(() => {
-                onOrderPlaced();
-            }, 6000);
-        }
-    };
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.checked && onOrderPlaced) {
+      // Wait for animation to complete before calling callback
+      setTimeout(() => {
+        onOrderPlaced();
+      }, 6000);
+    }
+  };
 
-    return (
-        <StyledWrapper>
-            <div className="container">
-                <input type="checkbox" id="trigger" onChange={handleChange} />
-                <label htmlFor="trigger" className="btn">
-                    <div className="stars" />
-                    <div className="background" />
-                    <span className="order">Place Order</span>
-                    <span className="done">Done</span>
-                    <div className="car-container">
-                        <div className="car-part1" />
-                        <div className="car-part2" />
-                        <div className="wheels" />
-                        <div className="details" />
-                    </div>
-                    <div className="package-container">
-                        <div className="package" />
-                        <div className="package-details" />
-                        <span className="package-text">📦</span>
-                    </div>
-                </label>
-            </div>
-        </StyledWrapper>
-    );
+  return (
+    <StyledWrapper>
+      <div className="container">
+        <input type="checkbox" id="trigger" onChange={handleChange} />
+        <label htmlFor="trigger" className="btn">
+          <div className="stars" />
+          <div className="background" />
+          <span className="order">Place Order</span>
+          <span className="done">Done</span>
+          <div className="car-container">
+            <div className="car-part1" />
+            <div className="car-part2" />
+            <div className="wheels" />
+            <div className="details" />
+          </div>
+          <div className="package-container">
+            <div className="package" />
+            <div className="package-details" />
+            <span className="package-text">📦</span>
+          </div>
+        </label>
+      </div>
+    </StyledWrapper>
+  );
 };
 
 const StyledWrapper = styled.div`
@@ -58,10 +58,10 @@ const StyledWrapper = styled.div`
     width: 200px;
     height: 50px;
     background: linear-gradient(
-      to bottom,
-      rgb(255, 63, 108) 10%,
-      rgb(255, 100, 130) 50%,
-      rgb(255, 144, 90) 100%
+      135deg,
+      #ff3f6c 0%,
+      #ff5a8a 50%,
+      #ff80b0 100%
     );
     display: flex;
     justify-content: center;

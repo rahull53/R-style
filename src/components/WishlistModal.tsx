@@ -34,22 +34,24 @@ export default function WishlistModal() {
                 maxWidth: '100%',
                 height: '100dvh',
                 maxHeight: '-webkit-fill-available',
-                background: '#ffffff',
+                background: '#111111',
                 zIndex: 1050,
                 display: 'flex',
                 flexDirection: 'column',
-                boxShadow: '-4px 0 20px rgba(0,0,0,0.15)',
-                paddingBottom: 'env(safe-area-inset-bottom, 0)'
+                boxShadow: '-4px 0 30px rgba(0,0,0,0.5)',
+                paddingBottom: 'env(safe-area-inset-bottom, 0)',
+                borderLeft: '1px solid rgba(255, 63, 108, 0.2)'
             }}>
                 {/* Header */}
                 <div style={{
                     padding: '20px',
-                    borderBottom: '1px solid #d4d5d9',
+                    borderBottom: '1px solid rgba(255, 63, 108, 0.1)',
                     display: 'flex',
                     justifyContent: 'space-between',
-                    alignItems: 'center'
+                    alignItems: 'center',
+                    background: '#1a1a1a'
                 }}>
-                    <h5 style={{ margin: 0, fontWeight: 700, color: '#282c3f' }}>
+                    <h5 style={{ margin: 0, fontWeight: 700, color: '#ffffff' }}>
                         <Heart size={20} style={{ marginRight: '8px', fill: '#ff3f6c', color: '#ff3f6c' }} />
                         Wishlist ({wishlistItems.length})
                     </h5>
@@ -62,7 +64,7 @@ export default function WishlistModal() {
                             padding: '4px'
                         }}
                     >
-                        <X size={24} color="#282c3f" />
+                        <X size={24} color="#ffffff" />
                     </button>
                 </div>
 
@@ -72,10 +74,10 @@ export default function WishlistModal() {
                         <div style={{
                             textAlign: 'center',
                             padding: '48px 20px',
-                            color: '#94969f'
+                            color: '#aaaaaa'
                         }}>
-                            <Heart size={48} style={{ marginBottom: '16px', opacity: 0.5 }} />
-                            <p style={{ fontWeight: 600 }}>Your wishlist is empty!</p>
+                            <Heart size={48} color="#ff3f6c" style={{ marginBottom: '16px', opacity: 0.3 }} />
+                            <p style={{ fontWeight: 600, color: '#ffffff' }}>Your wishlist is empty!</p>
                             <p style={{ fontSize: '14px' }}>Save items you love here</p>
                         </div>
                     ) : (
@@ -84,7 +86,7 @@ export default function WishlistModal() {
                                 display: 'flex',
                                 gap: '12px',
                                 padding: '16px 0',
-                                borderBottom: '1px solid #f5f5f6'
+                                borderBottom: '1px solid rgba(255, 255, 255, 0.05)'
                             }}>
                                 <div style={{
                                     width: '80px',
@@ -105,7 +107,7 @@ export default function WishlistModal() {
                                     <h6 style={{
                                         margin: '0 0 4px',
                                         fontWeight: 600,
-                                        color: '#282c3f',
+                                        color: '#ffffff',
                                         fontSize: '14px'
                                     }}>
                                         {item.name}
@@ -113,7 +115,7 @@ export default function WishlistModal() {
                                     <p style={{
                                         margin: '0 0 8px',
                                         fontWeight: 700,
-                                        color: '#282c3f'
+                                        color: '#ff3f6c'
                                     }}>
                                         {item.price}
                                     </p>
@@ -143,7 +145,7 @@ export default function WishlistModal() {
                                             style={{
                                                 background: 'none',
                                                 border: 'none',
-                                                color: '#94969f',
+                                                color: '#888888',
                                                 fontSize: '12px',
                                                 fontWeight: 600,
                                                 cursor: 'pointer',

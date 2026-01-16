@@ -47,12 +47,13 @@ export default function ProfileModal() {
                 left: '16px',
                 maxWidth: '300px',
                 marginLeft: 'auto',
-                background: '#ffffff',
+                background: '#111111',
                 zIndex: 1050,
-                borderRadius: '8px',
-                boxShadow: '0 10px 30px rgba(0,0,0,0.2)',
+                borderRadius: '12px',
+                boxShadow: '0 10px 40px rgba(0,0,0,0.5)',
                 overflow: 'hidden',
-                animation: 'slideIn 0.3s ease'
+                animation: 'slideIn 0.3s ease',
+                border: '1px solid rgba(255, 63, 108, 0.2)'
             }}>
                 <style>{`
                     @keyframes slideIn {
@@ -60,15 +61,19 @@ export default function ProfileModal() {
                         to { transform: translateY(0); opacity: 1; }
                     }
                     .profile-opt:hover {
-                        background: #f5f5f6;
+                        background: rgba(255, 63, 108, 0.1);
+                        color: #ff3f6c !important;
+                    }
+                    .profile-opt:hover span {
+                        color: #ff3f6c !important;
                     }
                 `}</style>
 
                 {/* Header */}
                 <div style={{
                     padding: '20px',
-                    background: '#f5f5f6',
-                    borderBottom: '1px solid #d4d5d9',
+                    background: '#1a1a1a',
+                    borderBottom: '1px solid rgba(255, 63, 108, 0.1)',
                     display: 'flex',
                     alignItems: 'center',
                     gap: '12px'
@@ -76,7 +81,7 @@ export default function ProfileModal() {
                     <div style={{
                         width: '40px',
                         height: '40px',
-                        background: '#3e4152',
+                        background: 'linear-gradient(135deg, #ff3f6c 0%, #333 100%)',
                         borderRadius: '50%',
                         display: 'flex',
                         alignItems: 'center',
@@ -86,17 +91,16 @@ export default function ProfileModal() {
                         <User size={24} />
                     </div>
                     <div>
-                        <div style={{ fontWeight: 700, fontSize: '14px', color: '#282c3f' }}>
+                        <div style={{ fontWeight: 700, fontSize: '14px', color: '#ffffff' }}>
                             {user?.name || 'User'}
                         </div>
-                        <div style={{ fontSize: '12px', color: '#696b79' }}>
+                        <div style={{ fontSize: '12px', color: '#aaaaaa' }}>
                             {user?.mobile ? `+91 ${user.mobile}` : 'Access account'}
                         </div>
                     </div>
                 </div>
 
                 <div style={{ padding: '8px 0' }}>
-
                     {profileOptions.map((opt, idx) => (
                         <div
                             key={idx}
@@ -108,12 +112,13 @@ export default function ProfileModal() {
                                 alignItems: 'center',
                                 gap: '12px',
                                 cursor: 'pointer',
-                                color: '#3e4152',
+                                color: '#dddddd',
                                 fontSize: '14px',
-                                fontWeight: 500
+                                fontWeight: 500,
+                                transition: 'all 0.2s ease'
                             }}
                         >
-                            <span style={{ color: '#696b79' }}>{opt.icon}</span>
+                            <span style={{ color: '#888888', transition: 'color 0.2s' }}>{opt.icon}</span>
                             {opt.label}
                         </div>
                     ))}
