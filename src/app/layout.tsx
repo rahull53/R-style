@@ -4,9 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./globals.scss";
 import { CartProvider } from "@/context/CartContext";
 import { AuthProvider } from "@/context/AuthContext";
-import CartSidebar from "@/components/CartSidebar";
-import SearchModal from "@/components/SearchModal";
-import AuthModal from "@/components/AuthModal";
+import ClientModals from "@/components/ClientModals";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,9 +24,7 @@ export default function RootLayout({
         <AuthProvider>
           <CartProvider>
             {children}
-            <CartSidebar />
-            <SearchModal />
-            <AuthModal />
+            <ClientModals />
           </CartProvider>
         </AuthProvider>
       </body>

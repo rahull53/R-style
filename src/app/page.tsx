@@ -5,7 +5,7 @@ import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
-    <main style={{ minHeight: '100vh', background: '#ffffff' }}>
+    <main style={{ minHeight: '100vh', background: '#000000' }}>
       <Navigation />
 
       <HeroBento />

@@ -5,10 +5,18 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Link from 'next/link';
 import { Facebook, Instagram, Twitter, Youtube } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 export default function Footer() {
     return (
-        <footer className="footer-myntra pt-5">
+        <motion.footer
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="footer-myntra pt-5"
+            style={{ backgroundColor: '#000000', color: '#ffffff', borderTop: '1px solid rgba(255, 63, 108, 0.3)' }}
+        >
             <Container>
                 <Row className="g-4">
                     <Col lg={3} md={6} xs={6}>
@@ -53,6 +61,6 @@ export default function Footer() {
                     © 2025 R Style. All rights reserved.
                 </div>
             </Container>
-        </footer>
+        </motion.footer>
     );
 }

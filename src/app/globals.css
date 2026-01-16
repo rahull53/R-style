@@ -1,27 +1,15 @@
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #000000;
+  --foreground: #ffffff;
+  --primary: #ff3f6c;
+  --secondary: #121212;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #000000;
+    --foreground: #ffffff;
   }
-}
-
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 * {
@@ -30,13 +18,113 @@ body {
   margin: 0;
 }
 
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  background-color: #000000 !important;
+  color: #ffffff !important;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  position: relative;
+}
+
+/* Global Section Overrides */
+section,
+main,
+.container,
+.container-fluid {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+}
+
+/* Navbar Overrides */
+.navbar,
+.navbar-myntra,
+header {
+  background-color: #000000 !important;
+  border-bottom: 1px solid rgba(255, 63, 108, 0.3) !important;
+}
+
+.nav-link-myntra,
+.nav-link,
+.lucide {
+  color: #ffffff !important;
+}
+
+.search-myntra {
+  background: #1a1a1a !important;
+  border: 1px solid #333 !important;
+}
+
+.search-myntra input {
+  color: white !important;
+}
+
+.hero-bento,
+.product-card,
+.glass-card {
+  background-color: #111111 !important;
+  border: 1px solid rgba(255, 63, 108, 0.1) !important;
+}
+
+/* Premium Black & Pink Animated Background */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background:
+    radial-gradient(at 0% 0%, rgba(255, 63, 108, 0.2) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(255, 63, 108, 0.1) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(255, 63, 108, 0.15) 0px, transparent 50%),
+    radial-gradient(at 50% 50%, rgba(255, 63, 108, 0.05) 0px, transparent 50%);
+  z-index: -1;
+  filter: blur(80px);
+  animation: bg-pulse 10s ease-in-out infinite alternate;
+}
+
+@keyframes bg-pulse {
+  0% {
+    transform: scale(1);
+  }
+
+  100% {
+    transform: scale(1.1);
+  }
+}
+
 a {
   color: inherit;
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+.modal-content {
+  background-color: #111111 !important;
+  border: 1px solid rgba(255, 63, 108, 0.3) !important;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #000;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #ff3f6c;
 }

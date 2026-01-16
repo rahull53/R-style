@@ -46,11 +46,12 @@ export default function Navigation() {
             expand="lg"
             fixed="top"
             className={`py-2 navbar-myntra ${scrolled ? 'shadow-sm' : ''}`}
+            style={{ backgroundColor: '#000000', borderBottom: '1px solid rgba(255, 63, 108, 0.3)' }}
         >
             <Container fluid className="d-flex align-items-center justify-content-between px-3">
                 <div className="d-flex align-items-center gap-2">
                     <Navbar.Toggle aria-controls="navbar-nav" className="border-0 p-0 me-2" suppressHydrationWarning>
-                        <Menu size={24} color="#282c3f" />
+                        <Menu size={24} color="#ffffff" />
                     </Navbar.Toggle>
 
                     <Navbar.Brand as={Link} href="/" className="d-flex align-items-center gap-2 m-0">
@@ -69,7 +70,7 @@ export default function Navigation() {
                 {/* Mobile Icons - Right Side */}
                 <div className="d-flex d-lg-none align-items-center gap-3">
                     <div onClick={() => setIsWishlistOpen(true)} className="position-relative">
-                        <Heart size={22} color="#282c3f" />
+                        <Heart size={22} color="#ffffff" />
                         {mounted && wishlistItems.length > 0 && (
                             <span className="position-absolute badge-myntra mobile-badge" style={{ top: '-5px', right: '-5px', background: '#ff3f6c', color: 'white', fontSize: '9px', padding: '1px 5px', borderRadius: '50%' }}>
                                 {wishlistItems.length}
@@ -77,7 +78,7 @@ export default function Navigation() {
                         )}
                     </div>
                     <div onClick={() => setIsCartOpen(true)} className="position-relative">
-                        <ShoppingBag size={22} color="#282c3f" />
+                        <ShoppingBag size={22} color="#ffffff" />
                         {mounted && cartItems.length > 0 && (
                             <span className="position-absolute badge-myntra mobile-badge" style={{ top: '-5px', right: '-5px', background: '#ff3f6c', color: 'white', fontSize: '9px', padding: '1px 5px', borderRadius: '50%' }}>
                                 {cartItems.length}
@@ -120,14 +121,14 @@ export default function Navigation() {
                             style={{ cursor: 'pointer' }}
                             onClick={() => user ? setIsProfileOpen(true) : setIsAuthModalOpen(true)}
                         >
-                            <User size={20} color="#282c3f" />
-                            <div style={{ fontSize: '11px', fontWeight: 600, color: '#282c3f' }}>
+                            <User size={20} color="#ffffff" />
+                            <div style={{ fontSize: '11px', fontWeight: 600, color: '#ffffff' }}>
                                 {user ? (user.name ? user.name.split(' ')[0] : 'Profile') : 'Login'}
                             </div>
                         </div>
                         <div className="text-center position-relative" style={{ cursor: 'pointer' }} onClick={() => setIsWishlistOpen(true)}>
-                            <Heart size={20} color="#282c3f" />
-                            <div style={{ fontSize: '11px', fontWeight: 600, color: '#282c3f' }}>Wishlist</div>
+                            <Heart size={20} color="#ffffff" />
+                            <div style={{ fontSize: '11px', fontWeight: 600, color: '#ffffff' }}>Wishlist</div>
                             {mounted && wishlistItems.length > 0 && (
                                 <span className="position-absolute badge-myntra" style={{ top: '-8px', right: '-8px', borderRadius: '50%', padding: '2px 6px', background: '#ff3f6c', color: 'white', fontSize: '10px' }}>
                                     {wishlistItems.length}
@@ -135,8 +136,8 @@ export default function Navigation() {
                             )}
                         </div>
                         <div className="text-center position-relative" style={{ cursor: 'pointer' }} onClick={() => setIsCartOpen(true)}>
-                            <ShoppingBag size={20} color="#282c3f" />
-                            <div style={{ fontSize: '11px', fontWeight: 600, color: '#282c3f' }}>Bag</div>
+                            <ShoppingBag size={20} color="#ffffff" />
+                            <div style={{ fontSize: '11px', fontWeight: 600, color: '#ffffff' }}>Bag</div>
                             {mounted && cartItems.length > 0 && (
                                 <span className="position-absolute badge-myntra" style={{ top: '-8px', right: '-8px', borderRadius: '50%', padding: '2px 6px' }}>
                                     {cartItems.length}
@@ -170,13 +171,13 @@ export default function Navigation() {
 
                     {/* Mobile Menu Links (Inside Hamburger) */}
                     <Nav className="d-lg-none mt-3">
-                        <Nav.Link as={Link} href="/" className="fw-bold text-dark border-bottom py-3">Home</Nav.Link>
-                        <Nav.Link as={Link} href="/category/men" className="fw-bold text-dark border-bottom py-3">Men</Nav.Link>
-                        <Nav.Link as={Link} href="/category/women" className="fw-bold text-dark border-bottom py-3">Women</Nav.Link>
-                        <Nav.Link as={Link} href="/category/accessories" className="fw-bold text-dark border-bottom py-3">Accessories</Nav.Link>
-                        <Nav.Link as={Link} href="/category/footwear" className="fw-bold text-dark border-bottom py-3">Footwear</Nav.Link>
+                        <Nav.Link as={Link} href="/" className="fw-bold text-white border-bottom border-secondary py-3">Home</Nav.Link>
+                        <Nav.Link as={Link} href="/category/men" className="fw-bold text-white border-bottom border-secondary py-3">Men</Nav.Link>
+                        <Nav.Link as={Link} href="/category/women" className="fw-bold text-white border-bottom border-secondary py-3">Women</Nav.Link>
+                        <Nav.Link as={Link} href="/category/accessories" className="fw-bold text-white border-bottom border-secondary py-3">Accessories</Nav.Link>
+                        <Nav.Link as={Link} href="/category/footwear" className="fw-bold text-white border-bottom border-secondary py-3">Footwear</Nav.Link>
                         <div className="py-3" onClick={() => user ? setIsProfileOpen(true) : setIsAuthModalOpen(true)}>
-                            <span className="fw-bold text-dark">{user ? 'Profile' : 'Login / Signup'}</span>
+                            <span className="fw-bold text-white">{user ? 'Profile' : 'Login / Signup'}</span>
                         </div>
                     </Nav>
                 </Navbar.Collapse>

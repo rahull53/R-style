@@ -5,6 +5,9 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Link from 'next/link';
 import Image from 'next/image';
+import { motion } from 'framer-motion';
+import AnimatedButton from './ui/animated-button';
+import { useRouter } from 'next/navigation';
 
 const CATEGORIES = [
     {
@@ -37,17 +40,23 @@ export default function HeroBento() {
     return (
         <>
             {/* Promo Banner */}
-            <div className="promo-banner">
+            <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                className="promo-banner"
+            >
                 🎉 FLAT 50% OFF on Your First Order! Use Code: <strong>RSTYLE50</strong> 🎉
-            </div>
+            </motion.div>
 
             {/* Hero Banner */}
-            <div className="hero-banner" style={{ marginTop: '70px' }}>
+            <div className="hero-banner" style={{ backgroundColor: '#000000', paddingTop: '70px' }}>
                 <div className="hero-container" style={{
                     position: 'relative',
                     width: '100%',
-                    background: 'linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)',
-                    overflow: 'hidden'
+                    background: 'linear-gradient(135deg, #000000 0%, #ff3f6c 100%)',
+                    overflow: 'hidden',
+                    borderBottom: '1px solid rgba(255, 63, 108, 0.3)'
                 }}>
                     <div className="hero-content" style={{
                         position: 'absolute',
@@ -58,67 +67,119 @@ export default function HeroBento() {
                         zIndex: 1,
                         width: '90%'
                     }}>
-                        <h1 className="hero-title">
+                        <motion.h1
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6, delay: 0.2 }}
+                            className="hero-title"
+                            style={{ color: '#ffffff', textShadow: '0 0 10px rgba(255, 63, 108, 0.5)' }}
+                        >
                             FASHION SALE
-                        </h1>
-                        <p className="hero-subtitle">
+                        </motion.h1>
+                        <motion.p
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6, delay: 0.4 }}
+                            className="hero-subtitle"
+                            style={{ color: '#ffffff', opacity: 0.9 }}
+                        >
                             Up to 50-80% Off on Trendy Styles
-                        </p>
-                        <Link href="/category/women" className="btn-myntra" style={{ textDecoration: 'none' }}>
-                            SHOP NOW
-                        </Link>
+                        </motion.p>
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ duration: 0.5, delay: 0.6 }}
+                        >
+                            <Link href="/category/women" style={{ textDecoration: 'none' }}>
+                                <AnimatedButton>SHOP NOW</AnimatedButton>
+                            </Link>
+                        </motion.div>
                     </div>
                 </div>
             </div>
 
             {/* Category Cards */}
-            <Container className="py-5">
-                <div className="section-header">
-                    <h2>Shop by Category</h2>
-                    <Link href="/category/all">View All</Link>
-                </div>
+            <div style={{ backgroundColor: '#000000', color: '#ffffff' }}>
+                <Container className="py-5">
+                    <div className="section-header">
+                        <motion.h2
+                            initial={{ opacity: 0, x: -20 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.5 }}
+                            style={{ color: '#ffffff' }}
+                        >
+                            Shop by Category
+                        </motion.h2>
+                        <Link href="/category/all" style={{ color: '#ff3f6c' }}>View All</Link>
+                    </div>
 
-                <Row className="g-4">
-                    {CATEGORIES.map((category, idx) => (
-                        <Col key={idx} xl={3} lg={3} md={6} xs={6}>
-                            <Link href={category.href} style={{ textDecoration: 'none' }}>
-                                <div className="category-card">
-                                    <Image
-                                        src={category.image}
-                                        alt={category.name}
-                                        fill
-                                        style={{ objectFit: 'cover' }}
-                                    />
-                                    <div className="category-overlay">
-                                        <h3>{category.name}</h3>
-                                        <p>{category.tagline}</p>
-                                    </div>
-                                </div>
-                            </Link>
-                        </Col>
-                    ))}
-                </Row>
-            </Container>
+                    <Row className="g-4">
+                        {CATEGORIES.map((category, idx) => (
+                            <Col key={idx} xl={3} lg={3} md={6} xs={6}>
+                                <motion.div
+                                    initial={{ opacity: 0, y: 20 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true }}
+                                    transition={{ duration: 0.5, delay: idx * 0.1 }}
+                                    whileHover={{ y: -5 }}
+                                >
+                                    <Link href={category.href} style={{ textDecoration: 'none' }}>
+                                        <div className="category-card" style={{ border: '1px solid rgba(255, 63, 108, 0.2)' }}>
+                                            <Image
+                                                src={category.image}
+                                                alt={category.name}
+                                                fill
+                                                style={{ objectFit: 'cover' }}
+                                            />
+                                            <div className="category-overlay">
+                                                <h3 style={{ color: '#ffffff' }}>{category.name}</h3>
+                                                <p style={{ color: '#d3d3d3' }}>{category.tagline}</p>
+                                            </div>
+                                        </div>
+                                    </Link>
+                                </motion.div>
+                            </Col>
+                        ))}
+                    </Row>
+                </Container>
+            </div>
 
             {/* Deals Banner */}
-            <Container className="pb-5">
-                <Row className="g-4">
-                    <Col md={6}>
-                        <div className="deal-card deal-fest">
-                            <span className="deal-tag">LIMITED TIME</span>
-                            <h3 className="deal-title">Accessories Fest</h3>
-                            <p className="deal-desc">Min 40% Off on Watches, Bags & More</p>
-                        </div>
-                    </Col>
-                    <Col md={6}>
-                        <div className="deal-card deal-new">
-                            <span className="deal-tag">NEW ARRIVALS</span>
-                            <h3 className="deal-title">Footwear Collection</h3>
-                            <p className="deal-desc">Sneakers, Heels & Sandals</p>
-                        </div>
-                    </Col>
-                </Row>
-            </Container>
+            <div style={{ backgroundColor: '#000000', color: '#ffffff' }}>
+                <Container className="pb-5">
+                    <Row className="g-4">
+                        <Col md={6}>
+                            <motion.div
+                                initial={{ opacity: 0, x: -50 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.6 }}
+                                className="deal-card deal-fest"
+                                style={{ background: 'linear-gradient(45deg, #111, #ff3f6c33)', border: '1px solid rgba(255, 63, 108, 0.3)' }}
+                            >
+                                <span className="deal-tag" style={{ background: '#ff3f6c' }}>LIMITED TIME</span>
+                                <h3 className="deal-title" style={{ color: '#ffffff' }}>Accessories Fest</h3>
+                                <p className="deal-desc" style={{ color: '#d3d3d3' }}>Min 40% Off on Watches, Bags & More</p>
+                            </motion.div>
+                        </Col>
+                        <Col md={6}>
+                            <motion.div
+                                initial={{ opacity: 0, x: 50 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.6 }}
+                                className="deal-card deal-new"
+                                style={{ background: 'linear-gradient(45deg, #111, #333)', border: '1px solid rgba(255, 255, 255, 0.1)' }}
+                            >
+                                <span className="deal-tag" style={{ background: '#444' }}>NEW ARRIVALS</span>
+                                <h3 className="deal-title" style={{ color: '#ffffff' }}>Footwear Collection</h3>
+                                <p className="deal-desc" style={{ color: '#d3d3d3' }}>Sneakers, Heels & Sandals</p>
+                            </motion.div>
+                        </Col>
+                    </Row>
+                </Container>
+            </div>
         </>
     );
 }

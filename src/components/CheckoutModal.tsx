@@ -7,6 +7,7 @@ import Form from 'react-bootstrap/Form';
 import { useCart } from '@/context/CartContext';
 import { useAuth } from '@/context/AuthContext';
 import { MessageCircle, CheckCircle, Lock } from 'lucide-react';
+import PlaceOrderButton from './ui/place-order-button';
 
 interface CheckoutModalProps {
     show: boolean;
@@ -166,24 +167,25 @@ export default function CheckoutModal({ show, onHide }: CheckoutModalProps) {
                                     <span style={{ color: '#282c3f', fontWeight: 700, fontSize: '20px' }}>₹{total}</span>
                                 </div>
 
-                                <Button
-                                    type="submit"
-                                    className="w-100"
-                                    style={{
-                                        background: '#25D366',
-                                        border: 'none',
-                                        padding: '14px',
-                                        fontWeight: 700,
-                                        fontSize: '14px',
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        gap: '8px'
-                                    }}
-                                    suppressHydrationWarning
-                                >
-                                    <MessageCircle size={20} /> Place Order on WhatsApp
-                                </Button>
+                                <div style={{ display: 'flex', justifyContent: 'center', marginTop: '16px' }}>
+                                    <PlaceOrderButton onOrderPlaced={() => {
+                                        // Build WhatsApp message
+                                        const itemsList = cartItems.map(item =>
+                                            `- ${item.name} (x${item.quantity}) - ${item.price}`
+                                        ).join('%0A');
+
+                                        const message = `🛍️ *New Order from R Style*%0A%0A` +
+                                            `*Customer Details:*%0A` +
+                                            `Name: ${formData.name}%0A` +
+                                            `Phone: ${formData.phone}%0A` +
+                                            `Address: ${formData.address}%0A%0A` +
+                                            `*Order Items:*%0A${itemsList}%0A%0A` +
+                                            `*Total: ₹${total}*`;
+
+                                        window.open(`https://wa.me/919999999999?text=${message}`, '_blank');
+                                        setStep('success');
+                                    }} />
+                                </div>
                             </Form>
                         ) : (
                             <div style={{ textAlign: 'center', padding: '32px 0' }}>
