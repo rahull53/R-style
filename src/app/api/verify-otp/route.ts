@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { verifyOTPFromDb } from '@/lib/db/otp';
 
 export async function POST(request: Request) {
     try {
@@ -6,40 +7,28 @@ export async function POST(request: Request) {
 
         if (!otp || !sessionId) {
             return NextResponse.json(
-                { success: false, error: 'OTP and Session ID are required' },
+                { success: false, error: 'OTP and Session ID (Identifier) are required' },
                 { status: 400 }
             );
         }
 
-        const apiKey = '5d2c647c-ec7d-11f0-a6b2-0200cd936042';
+        // Verify OTP from our Firestore database
+        const verification = await verifyOTPFromDb(sessionId, otp);
 
-        // ✅ CORRECT URL for Verification
-        const url = `https://2factor.in/API/V1/${apiKey}/SMS/VERIFY/${sessionId}/${otp}`;
-
-        const response = await fetch(url, {
-            method: 'GET',
-            headers: {
-                'cache-control': 'no-cache'
-            }
-        });
-
-        const data = await response.json();
-
-        if (data.Status === 'Success') {
+        if (verification.success) {
             return NextResponse.json({
                 success: true,
-                message: "OTP Verified Successfully",
-                data
+                message: "OTP Verified Successfully"
             });
         } else {
             return NextResponse.json(
-                { success: false, error: data.Details || 'Invalid OTP' },
+                { success: false, error: verification.error || 'Invalid OTP' },
                 { status: 400 }
             );
         }
 
     } catch (error: any) {
-        console.error('2Factor Verification Error:', error);
+        console.error('OTP Verification Error:', error);
         return NextResponse.json(
             { success: false, error: error.message },
             { status: 500 }

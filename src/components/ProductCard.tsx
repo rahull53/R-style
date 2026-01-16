@@ -75,6 +75,7 @@ const ProductCard: React.FC<ProductCardProps> = React.memo(({
                                 e.stopPropagation();
                                 onAddToCart();
                             }}
+                            suppressHydrationWarning
                         >
                             <Plus size={16} />
                         </button>

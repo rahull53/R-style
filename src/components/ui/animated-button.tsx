@@ -12,7 +12,11 @@ interface AnimatedButtonProps {
 const AnimatedButton = ({ children, onClick, className }: AnimatedButtonProps) => {
   return (
     <StyledWrapper>
-      <button className={`styled-button ${className || ''}`} onClick={onClick}>
+      <button
+        className={`styled-button ${className || ''}`}
+        onClick={onClick}
+        suppressHydrationWarning
+      >
         <span className="gradient-bg"></span>
         <span className="button-content">
           {children}

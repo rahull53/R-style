@@ -43,6 +43,7 @@ const LikeButton: React.FC<LikeButtonProps> = React.memo(({ productId, productDa
                     type="checkbox"
                     checked={localIsLiked}
                     onChange={handleToggle}
+                    suppressHydrationWarning
                 />
                 <div className="bookmark">
                     <svg viewBox="0 0 16 16" style={{ marginTop: 4 }} className="bi bi-heart-fill" height={25} width={25} xmlns="http://www.w3.org/2000/svg">

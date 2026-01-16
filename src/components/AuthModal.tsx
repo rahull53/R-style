@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { useAuth } from '@/context/AuthContext';
-import { Phone, Shield, ArrowRight, X, Loader2, User } from 'lucide-react';
+import { Phone, Shield, ArrowRight, X, Loader2, User, Mail } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import styled from 'styled-components';
 
@@ -214,9 +214,10 @@ export default function AuthModal() {
     const { isAuthModalOpen, setIsAuthModalOpen, login } = useAuth();
     const [step, setStep] = useState<'mobile' | 'otp'>('mobile');
     const [mobile, setMobile] = useState('');
+    const [email, setEmail] = useState('');
     const [name, setName] = useState('');
     const [otp, setOtp] = useState('');
-    const [sessionId, setSessionId] = useState(''); // Store SessionId from 2Factor API
+    const [sessionId, setSessionId] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
 
@@ -224,9 +225,10 @@ export default function AuthModal() {
         if (!isAuthModalOpen) {
             setStep('mobile');
             setMobile('');
+            setEmail('');
             setName('');
             setOtp('');
-            setSessionId(''); // Reset sessionId
+            setSessionId('');
             setError('');
             setLoading(false);
         }
@@ -237,28 +239,31 @@ export default function AuthModal() {
             setError('Please enter a valid 10-digit mobile number');
             return;
         }
+        if (!email || !email.includes('@')) {
+            setError('Please enter a valid email address');
+            return;
+        }
 
         setLoading(true);
         setError('');
 
         try {
-            // Call our API to send SMS (uses the updated /api/send-otp from previous message)
             const response = await fetch('/api/send-otp', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ mobile }) // Only send mobile number now
+                body: JSON.stringify({ mobile, email })
             });
 
             const data = await response.json();
 
             if (data.success) {
-                setSessionId(data.sessionId); // Store the received SessionId
+                setSessionId(data.sessionId);
                 setStep('otp');
             } else {
-                throw new Error(data.error || 'Failed to send SMS');
+                throw new Error(data.error || 'Failed to send OTP');
             }
         } catch (err: any) {
-            console.error("SMS Error:", err);
+            console.error("OTP Error:", err);
             setError(err.message || 'Failed to send OTP. Try again.');
         } finally {
             setLoading(false);
@@ -391,13 +396,25 @@ export default function AuthModal() {
                                                     />
                                                 </div>
 
+                                                {/* Email Input */}
+                                                <div className="field">
+                                                    <Mail className="input-icon" size={16} />
+                                                    <input
+                                                        className="input-field"
+                                                        type="email"
+                                                        placeholder="Email Address"
+                                                        value={email}
+                                                        onChange={(e) => setEmail(e.target.value.trim())}
+                                                    />
+                                                </div>
+
                                                 {error && <p style={{ color: '#ff3f6c', fontSize: '11px', marginBottom: '10px', textAlign: 'center' }}>{error}</p>}
 
                                                 <div className="btn-container">
                                                     <button
                                                         className="button-primary"
                                                         onClick={handleSendOtp}
-                                                        disabled={loading || mobile.length !== 10}
+                                                        disabled={loading || mobile.length !== 10 || !email.includes('@')}
                                                     >
                                                         {loading ? <Loader2 size={18} className="animate-spin" /> : 'Get OTP'}
                                                         {!loading && <ArrowRight size={16} />}
@@ -452,8 +469,9 @@ export default function AuthModal() {
                                                 transition={{ duration: 0.2 }}
                                             >
                                                 <p className="heading">Verify OTP</p>
-                                                <p style={{ fontSize: '12px', color: '#94969f', textAlign: 'center', marginBottom: '1.5em' }}>
-                                                    Sent to <span style={{ color: 'white', fontWeight: 600 }}>+91 {mobile}</span>
+                                                <p style={{ fontSize: '11px', color: '#94969f', textAlign: 'center', marginBottom: '1.5em', lineHeight: '1.4' }}>
+                                                    Sent to <span style={{ color: 'white' }}>+91 {mobile.slice(0, 2)}******{mobile.slice(-2)}</span><br />
+                                                    & <span style={{ color: 'white' }}>{email.split('@')[0].slice(0, 3)}***@{email.split('@')[1]}</span>
                                                 </p>
 
                                                 {/* OTP Input */}
