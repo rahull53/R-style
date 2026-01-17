@@ -100,8 +100,8 @@ export default function HeroBento() {
 
             {/* Category Cards */}
             <div style={{ backgroundColor: '#000000', color: '#ffffff' }}>
-                <Container className="py-5">
-                    <div className="section-header">
+                <Container className="py-8 md:py-12">
+                    <div className="section-header mb-6">
                         <motion.h2
                             initial={{ opacity: 0, x: -20 }}
                             whileInView={{ opacity: 1, x: 0 }}
@@ -111,7 +111,7 @@ export default function HeroBento() {
                         >
                             Shop by Category
                         </motion.h2>
-                        <Link href="/category/all" style={{ color: '#ff3f6c' }}>View All</Link>
+                        <Link href="/category/all" className="text-sm font-semibold hover:underline" style={{ color: '#ff3f6c' }}>View All</Link>
                     </div>
 
                     <Row className="g-4">
@@ -150,7 +150,7 @@ export default function HeroBento() {
 
             {/* Deals Banner */}
             <div style={{ backgroundColor: '#000000', color: '#ffffff' }}>
-                <Container className="pb-5">
+                <Container className="pb-24 pt-5">
                     <Row className="g-4">
                         <Col md={6}>
                             <motion.div

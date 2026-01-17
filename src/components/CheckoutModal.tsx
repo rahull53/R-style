@@ -29,7 +29,7 @@ export default function CheckoutModal({ show, onHide }: CheckoutModalProps) {
             setFormData(prev => ({
                 ...prev,
                 name: user.name || prev.name,
-                phone: user.mobile || prev.phone
+                phone: user.mobile || user.email || prev.phone
             }));
         } else {
             // Load saved user data from old checkout (fallback)
@@ -150,14 +150,16 @@ export default function CheckoutModal({ show, onHide }: CheckoutModalProps) {
                                         className="custom-input"
                                     />
                                 </Form.Group>
+
                                 <Form.Group className="mb-4">
-                                    <Form.Label style={{ fontWeight: 600, color: '#ffffff', fontSize: '14px' }}>Phone Number</Form.Label>
+                                    <Form.Label style={{ fontWeight: 600, color: '#ffffff', fontSize: '14px' }}>Phone Number / Email</Form.Label>
                                     <Form.Control
-                                        type="tel"
+                                        type="text"
                                         required
-                                        readOnly // Phone is locked to verified user
+                                        readOnly={!!(user?.mobile || user?.email)} // Verified user cannot change ID
                                         style={{ background: '#1a1a1a', border: '1px solid #333', borderRadius: '8px', padding: '12px', color: '#ff3f6c', opacity: 0.8 }}
                                         value={formData.phone}
+                                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, phone: e.target.value })}
                                     />
                                 </Form.Group>
 
@@ -194,7 +196,7 @@ export default function CheckoutModal({ show, onHide }: CheckoutModalProps) {
                                         setStep('success');
                                     }} />
                                 </div>
-                            </Form>
+                            </Form >
                         ) : (
                             <div style={{ textAlign: 'center', padding: '32px 0' }}>
                                 <CheckCircle size={64} color="#ff3f6c" style={{ marginBottom: '16px' }} />
@@ -209,14 +211,15 @@ export default function CheckoutModal({ show, onHide }: CheckoutModalProps) {
                                     Continue Shopping
                                 </Button>
                             </div>
-                        )}
+                        )
+                        }
                     </>
                 )}
                 <style>{`
                     .custom-input::placeholder { color: #555 !important; }
                     .dark-close-button .btn-close { filter: invert(1) grayscale(100%) brightness(200%); }
                 `}</style>
-            </Modal.Body>
-        </Modal>
+            </Modal.Body >
+        </Modal >
     );
 }

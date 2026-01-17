@@ -16,11 +16,19 @@
     --myntra-orange: #ff905a;
 }
 
+html {
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+
 body {
     background-color: var(--myntra-bg);
     color: var(--myntra-text);
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     overflow-x: hidden;
+    max-width: 100vw;
+    margin: 0;
+    padding: 0;
 }
 
 // Custom Scrollbar

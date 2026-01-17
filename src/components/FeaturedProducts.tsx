@@ -36,24 +36,31 @@ export default function FeaturedProducts() {
                     {products.map((product) => {
                         return (
                             <Col key={product.id} xl={3} lg={4} md={6} sm={12} className="mb-4">
-                                <ProductCard
-                                    id={product.id}
-                                    name={product.name}
-                                    brand={product.brand}
-                                    price={product.price}
-                                    image={product.image}
-                                    tag={product.tag}
-                                    onAddToCart={() => {
-                                        addToCart({
-                                            id: product.id,
-                                            name: product.name,
-                                            price: `₹${product.price}`,
-                                            image: product.image,
-                                            brand: product.brand
-                                        });
-                                        setIsCartOpen(true);
-                                    }}
-                                />
+                                <motion.div
+                                    initial={{ opacity: 0, y: 20 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true }}
+                                    transition={{ duration: 0.5 }}
+                                >
+                                    <ProductCard
+                                        id={product.id}
+                                        name={product.name}
+                                        brand={product.brand}
+                                        price={product.price}
+                                        image={product.image}
+                                        tag={product.tag}
+                                        onAddToCart={() => {
+                                            addToCart({
+                                                id: product.id,
+                                                name: product.name,
+                                                price: `₹${product.price}`,
+                                                image: product.image,
+                                                brand: product.brand
+                                            });
+                                            setIsCartOpen(true);
+                                        }}
+                                    />
+                                </motion.div>
                             </Col>
                         );
                     })}

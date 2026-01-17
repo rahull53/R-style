@@ -5,7 +5,7 @@ import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
-    <main style={{ minHeight: '100vh', background: '#000000' }}>
+    <main className="w-full overflow-x-hidden" style={{ minHeight: '100vh', background: '#000000' }}>
       <Navigation />
 
       <HeroBento />
