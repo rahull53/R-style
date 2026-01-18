@@ -54,7 +54,7 @@ export default function CategoryPage() {
                 <Row className="g-4">
                     {filteredProducts.map((product) => {
                         return (
-                            <Col key={product.id} lg={3} md={4} sm={6} xs={12}>
+                            <Col key={product.id} lg={3} md={4} sm={6} xs={6}>
                                 <ProductCard
                                     id={product.id}
                                     name={product.name}

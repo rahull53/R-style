@@ -5,9 +5,9 @@
 // Bootstrap imported in layout.tsx
 
 :root {
-    // Myntra-style Light Theme
-    --myntra-bg: #ffffff;
-    --myntra-surface: #f5f5f6;
+    // Dark Theme for R Style
+    --myntra-bg: #000000;
+    --myntra-surface: #111111;
     --myntra-accent: #ff3f6c;
     --myntra-text: #282c3f;
     --myntra-text-muted: #94969f;
@@ -16,19 +16,174 @@
     --myntra-orange: #ff905a;
 }
 
+/* ========== SCROLLBAR WHITE LINE FIX ========== */
+
+/* Force full width without scrollbar gap */
 html {
     overflow-x: hidden;
-    scroll-behavior: smooth;
+    overflow-y: scroll;
+    /* Always show scrollbar space */
+    scrollbar-gutter: stable;
+    /* Prevent layout shift */
+    background-color: #000000 !important;
 }
 
 body {
-    background-color: var(--myntra-bg);
-    color: var(--myntra-text);
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     overflow-x: hidden;
-    max-width: 100vw;
+    background-color: #000000 !important;
     margin: 0;
     padding: 0;
+    width: 100vw;
+    max-width: 100%;
+}
+
+/* Fill the scrollbar gutter with black */
+html::-webkit-scrollbar-track {
+    background: #000000 !important;
+}
+
+html::-webkit-scrollbar {
+    width: 8px;
+    background: #000000 !important;
+}
+
+html::-webkit-scrollbar-thumb {
+    background: #333333;
+    border-radius: 4px;
+}
+
+html::-webkit-scrollbar-thumb:hover {
+    background: #ff3f6c;
+}
+
+/* Firefox scrollbar */
+html {
+    scrollbar-width: thin;
+    scrollbar-color: #333333 #000000;
+}
+
+/* Remove any white space on right side */
+* {
+    box-sizing: border-box;
+}
+
+#__next,
+main,
+body>div {
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden;
+}
+
+// Force everything to have black background
+#__next,
+main,
+div[class*="container"] {
+    background-color: #000000 !important;
+    position: relative;
+    width: 100%;
+}
+
+// Fix for mobile viewport height issues
+@supports (-webkit-touch-callout: none) {
+    body {
+        min-height: -webkit-fill-available;
+    }
+}
+
+// Force all containers and wrappers to black background
+// Bootstrap Container Override - All variants
+.container,
+.container-fluid,
+.container-sm,
+.container-md,
+.container-lg,
+.container-xl,
+.container-xxl,
+.row,
+main>*,
+section {
+    background-color: #000000 !important;
+}
+
+// Bootstrap Row with gutter fix
+.row {
+    --bs-gutter-x: 1rem;
+    --bs-gutter-y: 0;
+}
+
+// g-* spacing classes
+.g-4,
+.g-3,
+.g-2,
+.g-1,
+.g-0 {
+    background-color: #000000 !important;
+}
+
+// Category card fix
+.category-card {
+    background-color: #000000 !important;
+}
+
+// Specifically target product grid containers
+.product-grid,
+.products-container,
+[class*="product"] {
+    background-color: #000000 !important;
+}
+
+// Remove any default gaps that might show white
+.row {
+    margin: 0;
+    row-gap: 0;
+}
+
+.col,
+[class*="col-"] {
+    background-color: #000000 !important;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+// Product card specific fix
+.product-card-myntra {
+    background: #000000 !important;
+    border-radius: 0;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: 1px solid #1a1a1a;
+
+    &:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        transform: translate3d(0, -4px, 0);
+    }
+}
+
+// Force product image container to be black
+.product-card-myntra .product-image {
+    background-color: #000000 !important;
+}
+
+// Add this new rule for the product grid
+.products-row,
+.row {
+    background-color: #000000 !important;
+    gap: 0 !important;
+    margin: 0 !important;
+}
+
+// Force all col to have black background
+[class*="col"] {
+    background-color: #000000 !important;
+    padding: 0 !important;
+}
+
+// Add padding inside product card instead
+.product-card-myntra {
+    margin: 8px;
+    background: #000000 !important;
 }
 
 // Custom Scrollbar
@@ -37,7 +192,7 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-    background: var(--myntra-surface);
+    background: #000000;
 }
 
 ::-webkit-scrollbar-thumb {

@@ -5,10 +5,13 @@ import { useCart } from '@/context/CartContext';
 import { useAuth } from '@/context/AuthContext';
 import { useUI } from '@/context/UIContext';
 import Button from 'react-bootstrap/Button';
+import { useRouter } from 'next/navigation';
 
 export default function ProfileModal() {
     const { isProfileOpen, setIsProfileOpen, setIsWishlistOpen, setIsCartOpen } = useUI();
     const { user, logout } = useAuth();
+
+    const router = useRouter();
 
     if (!isProfileOpen) return null;
 
@@ -18,7 +21,7 @@ export default function ProfileModal() {
     };
 
     const profileOptions = [
-        { icon: <ShoppingBag size={18} />, label: 'Orders', onClick: () => { setIsProfileOpen(false); } },
+        { icon: <ShoppingBag size={18} />, label: 'Orders', onClick: () => { setIsProfileOpen(false); router.push('/orders'); } },
         { icon: <Heart size={18} />, label: 'Wishlist', onClick: () => { setIsWishlistOpen(true); setIsProfileOpen(false); } },
         { icon: <Settings size={18} />, label: 'Settings', onClick: () => { setIsProfileOpen(false); } },
         { icon: <LogOut size={18} />, label: 'Logout', onClick: handleLogout },

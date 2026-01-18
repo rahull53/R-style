@@ -61,7 +61,9 @@ const MobileMenu = () => {
                         <StyledMenuContent>
                             <div className="menu-header">
                                 <div className="logo-section">
-                                    <span className="style-text">R Style</span>
+                                    <div className="logo-wrapper">
+                                        <img src="/logo.png" alt="R Style Logo" width={24} height={24} />
+                                    </div>
                                 </div>
                                 <button className="close-btn" onClick={() => setIsMenuOpen(false)}>
                                     <X size={24} color="#ffffff" />

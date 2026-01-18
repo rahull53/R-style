@@ -32,10 +32,10 @@ export default function FeaturedProducts() {
                     <Link href="/category/all" style={{ color: '#ff3f6c' }}>View All</Link>
                 </div>
 
-                <Row className="g-3">
+                <Row className="g-0" style={{ backgroundColor: '#000000' }}>
                     {products.map((product) => {
                         return (
-                            <Col key={product.id} xl={3} lg={4} md={6} sm={12} className="mb-4">
+                            <Col key={product.id} xl={3} lg={3} md={4} sm={6} xs={6} className="p-2" style={{ backgroundColor: '#000000' }}>
                                 <motion.div
                                     initial={{ opacity: 0, y: 20 }}
                                     whileInView={{ opacity: 1, y: 0 }}

@@ -79,13 +79,11 @@ export default function Navigation() {
 
                     <Navbar.Brand as={Link} href="/" className="d-flex align-items-center gap-2 m-0 p-0">
                         <div className="logo-wrapper">
-                            <Image src="/logo.png" alt="R Style Logo" width={32} height={32} />
+                            <Image src="/logo.png" alt="R Style Logo" width={24} height={24} />
                         </div>
-                        <span className="brand-text">Style</span>
                     </Navbar.Brand>
-
                     {/* Desktop Links */}
-                    <Nav className="ms-4 d-none d-lg-flex nav-links-desktop">
+                    <Nav className="ms-5 ps-5 d-none d-lg-flex nav-links-desktop">
                         <Link href="/category/men" className="nav-item">Men</Link>
                         <Link href="/category/women" className="nav-item">Women</Link>
                         <Link href="/category/accessories" className="nav-item">Accessories</Link>

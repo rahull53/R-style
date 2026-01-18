@@ -92,11 +92,20 @@ export function CartProvider({ children }: { children: ReactNode }) {
         setCartItems([]);
     }, []);
 
-    const addOrder = useCallback((order: any) => {
+    const addOrder = useCallback(async (order: any) => {
+        // 1. Save to Firebase (Real Persistence)
+        // Dynamically import to safely use in client context without heavy initial load if desired, 
+        // but here standard import is fine. For now let's just call it.
+        const { createOrder } = await import('@/lib/db/orders');
+        await createOrder(order);
+
+        // 2. Keep local admin simulation for now (optional, can be removed later)
         const existingOrders = JSON.parse(localStorage.getItem('admin_orders') || '[]');
         const newOrder = { ...order, id: Date.now(), date: new Date().toLocaleString() };
         existingOrders.unshift(newOrder);
         localStorage.setItem('admin_orders', JSON.stringify(existingOrders));
+
+        // 3. Clear cart
         clearCart();
     }, [clearCart]);
 

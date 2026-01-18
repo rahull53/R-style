@@ -20,8 +20,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={inter.className} suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning style={{ scrollBehavior: 'smooth', backgroundColor: '#000000' }} data-scroll-behavior="smooth">
+      <body className={inter.className} suppressHydrationWarning style={{ backgroundColor: '#000000' }}>
         <AuthProvider>
           <UIProvider>
             <CartProvider>

@@ -28,7 +28,7 @@ const ProductCard: React.FC<ProductCardProps> = React.memo(({
 }) => {
     return (
         <StyledWrapper>
-            <div className="card">
+            <div className="product-card-container">
                 <div className="card__shine" />
                 <div className="card__glow" />
                 <div className="card__content">
@@ -89,7 +89,7 @@ const ProductCard: React.FC<ProductCardProps> = React.memo(({
 ProductCard.displayName = 'ProductCard';
 
 const StyledWrapper = styled.div`
-    .card {
+    .product-card-container {
         --card-bg: #111111;
         --card-accent: #ff3f6c;
         --card-text: #ffffff;
@@ -102,10 +102,29 @@ const StyledWrapper = styled.div`
         position: relative;
         overflow: hidden;
         transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-        box-shadow: var(--card-shadow);
-        border: 1px solid rgba(0, 0, 0, 0.08);
+        transform: translate3d(0, 0, 0);
+        backface-visibility: hidden;
+        -webkit-font-smoothing: subpixel-antialiased;
+        perspective: 1000px;
+        will-change: transform;
+        isolation: isolate;
+        border: none;
+        box-shadow: none; /* Shadow moved to ::after */
+        background: var(--card-bg);
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
             Ubuntu, Cantarell, sans-serif;
+    }
+
+    /* Pseudo-element for clean border overlay (Fixes white line/gaps) */
+    .product-card-container::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        border: 1px solid #222222;
+        box-shadow: var(--card-shadow);
+        pointer-events: none;
+        z-index: 20; /* Sit on top of everything to hide gaps */
     }
 
     .card__shine {
@@ -184,6 +203,8 @@ const StyledWrapper = styled.div`
         transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         position: relative;
         overflow: hidden;
+        transform: translate3d(0, 0, 0);
+        backface-visibility: hidden;
     }
 
     .card__image::after {
@@ -258,7 +279,7 @@ const StyledWrapper = styled.div`
     }
 
     /* Hover Effects */
-    .card:hover {
+    .product-card-container:hover {
         transform: translateY(-8px);
         box-shadow:
             0 20px 30px -10px rgba(0, 0, 0, 0.12),
@@ -266,43 +287,43 @@ const StyledWrapper = styled.div`
         border-color: rgba(255, 63, 108, 0.2);
     }
 
-    .card:hover .card__glow {
+    .product-card-container:hover .card__glow {
         opacity: 1;
     }
 
-    .card:hover .card__badge {
+    .product-card-container:hover .card__badge {
         transform: scale(1);
         opacity: 1;
     }
 
-    .card:hover .card__image {
+    .product-card-container:hover .card__image {
         transform: translateY(-3px) scale(1.02);
         box-shadow: 0 8px 16px -4px rgba(0, 0, 0, 0.12);
     }
 
-    .card:hover .card__title {
+    .product-card-container:hover .card__title {
         color: var(--card-accent);
     }
 
-    .card:hover .card__description {
+    .product-card-container:hover .card__description {
         opacity: 1;
     }
 
-    .card:hover .card__price {
+    .product-card-container:hover .card__price {
         color: var(--card-accent);
     }
 
-    .card:hover .card__button {
+    .product-card-container:hover .card__button {
         transform: scale(1);
         box-shadow: 0 0 0 4px rgba(255, 63, 108, 0.2);
     }
 
-    .card:hover .card__button svg {
+    .product-card-container:hover .card__button svg {
         animation: pulse 1.5s infinite;
     }
 
     /* Active State */
-    .card:active {
+    .product-card-container:active {
         transform: translateY(-4px) scale(0.98);
     }
 

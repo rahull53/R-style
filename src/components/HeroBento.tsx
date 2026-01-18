@@ -100,7 +100,7 @@ export default function HeroBento() {
 
             {/* Category Cards */}
             <div style={{ backgroundColor: '#000000', color: '#ffffff' }}>
-                <Container className="py-8 md:py-12">
+                <Container className="py-8 md:py-12" style={{ backgroundColor: '#000000' }}>
                     <div className="section-header mb-6">
                         <motion.h2
                             initial={{ opacity: 0, x: -20 }}
@@ -114,9 +114,9 @@ export default function HeroBento() {
                         <Link href="/category/all" className="text-sm font-semibold hover:underline" style={{ color: '#ff3f6c' }}>View All</Link>
                     </div>
 
-                    <Row className="g-4">
+                    <Row className="g-0" style={{ backgroundColor: '#000000', margin: 0 }}>
                         {CATEGORIES.map((category, idx) => (
-                            <Col key={idx} xl={3} lg={3} md={6} xs={6}>
+                            <Col key={idx} xl={3} lg={3} md={6} xs={6} className="p-2" style={{ backgroundColor: '#000000' }}>
                                 <motion.div
                                     initial={{ opacity: 0, y: 20 }}
                                     whileInView={{ opacity: 1, y: 0 }}
@@ -125,7 +125,7 @@ export default function HeroBento() {
                                     whileHover={{ y: -5 }}
                                 >
                                     <Link href={category.href} style={{ textDecoration: 'none' }}>
-                                        <div className="category-card" style={{ border: '1px solid rgba(255, 63, 108, 0.2)' }}>
+                                        <div className="category-card" style={{ border: '1px solid rgba(255, 63, 108, 0.2)', backgroundColor: '#000000' }}>
                                             <Image
                                                 src={category.image}
                                                 alt={category.name}
