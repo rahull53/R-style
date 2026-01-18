@@ -89,7 +89,7 @@ const StyledWrapper = styled.div`
     }
   }
 
-  .btn-container {
+  .btn-wrapper {
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -103,7 +103,7 @@ const StyledWrapper = styled.div`
     border: none;
     outline: none;
     transition: 0.4s ease-in-out;
-    background-color: #252525;
+    background: linear-gradient(135deg, #ff3f6c 0%, #ff5a8a 50%, #ff80b0 100%);
     color: white;
     font-weight: 600;
     width: 100%;
@@ -113,13 +113,16 @@ const StyledWrapper = styled.div`
     gap: 10px;
     
     &:hover:not(:disabled) {
-      background-color: #ff3f6c;
+      background: linear-gradient(135deg, #e63860 0%, #ff5a8a 50%, #ff80b0 100%);
+      transform: scale(1.02);
       color: white;
+      box-shadow: 0 4px 15px rgba(255, 63, 108, 0.4);
     }
 
     &:disabled {
       opacity: 0.5;
       cursor: not-allowed;
+      background: #333;
     }
   }
 
@@ -136,6 +139,7 @@ const StyledWrapper = styled.div`
 
     &:hover {
       color: #ff3f6c;
+      text-decoration: underline;
     }
   }
 
@@ -434,7 +438,7 @@ export default function AuthModal() {
 
                                                 {error && <p style={{ color: '#ff3f6c', fontSize: '11px', marginBottom: '10px', textAlign: 'center' }}>{error}</p>}
 
-                                                <div className="btn-container">
+                                                <div className="btn-wrapper">
                                                     <button
                                                         className="button-primary"
                                                         onClick={handleSendOtp}
@@ -503,7 +507,7 @@ export default function AuthModal() {
 
                                                 {error && <p style={{ color: '#ff3f6c', fontSize: '11px', marginBottom: '10px', textAlign: 'center' }}>{error}</p>}
 
-                                                <div className="btn-container">
+                                                <div className="btn-wrapper">
                                                     <button
                                                         className="button-primary"
                                                         onClick={handleSendEmailOtp}
@@ -553,7 +557,7 @@ export default function AuthModal() {
 
                                                 {error && <p style={{ color: '#ff3f6c', fontSize: '11px', marginBottom: '10px', textAlign: 'center' }}>{error}</p>}
 
-                                                <div className="btn-container">
+                                                <div className="btn-wrapper">
                                                     <button
                                                         className="button-primary"
                                                         onClick={handleVerifyOtp}

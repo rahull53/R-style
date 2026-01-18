@@ -1,5 +1,7 @@
 "use client";
 
+import { Truck } from 'lucide-react';
+
 import React from 'react';
 import styled from 'styled-components';
 
@@ -22,33 +24,32 @@ const PlaceOrderButton = ({ onOrderPlaced }: PlaceOrderButtonProps) => {
   };
 
   return (
-    <StyledWrapper>
-      <div className="container" onClick={handleClick}>
-        <input type="checkbox" id="trigger" checked={status !== 'initial'} readOnly />
-        <label htmlFor="trigger" className="btn">
+    <StyledWrapper data-status={status}>
+      <div className="button-root" onClick={handleClick}>
+        <div className="btn">
           <div className="stars" />
           <div className="background" />
           <span className="order">Place Order</span>
           <span className="done">Done</span>
-          <div className="car-container">
+          <div className="car-wrapper">
             <div className="car-part1" />
             <div className="car-part2" />
             <div className="wheels" />
             <div className="details" />
           </div>
-          <div className="package-container">
+          <div className="package-wrapper">
             <div className="package" />
             <div className="package-details" />
             <span className="package-text">📦</span>
           </div>
-        </label>
+        </div>
       </div>
     </StyledWrapper>
   );
 };
 
 const StyledWrapper = styled.div`
-  .container {
+  .button-root {
     position: relative;
     width: 100%;
     height: 60px;
@@ -80,6 +81,33 @@ const StyledWrapper = styled.div`
 
   .btn:hover {
     transform: scale(1.05);
+  }
+
+  /* When status is not initial (animating or done), hide stars */
+  &[data-status="animating"] .stars,
+  &[data-status="done"] .stars {
+    display: none;
+  }
+
+  /* Trigger animations when status is 'animating' or 'done' */
+  &[data-status="animating"] .package-wrapper,
+  &[data-status="animating"] .order,
+  &[data-status="animating"] .done,
+  &[data-status="animating"] .car-wrapper,
+  &[data-status="animating"] .package::after,
+  &[data-status="animating"] .package::before,
+  &[data-status="animating"] .background,
+  &[data-status="done"] .package-wrapper,
+  &[data-status="done"] .background {
+     animation-play-state: running;
+  }
+
+  /* Specific handling for text when done */
+  &[data-status="done"] .order {
+      transform: translate(0%, -200%); /* Keep it out */
+  }
+  &[data-status="done"] .done {
+      transform: translate(0%); /* Keep it in */
   }
 
   .stars {
@@ -162,13 +190,16 @@ const StyledWrapper = styled.div`
     text-transform: uppercase;
   }
 
-  .car-container {
+  .car-wrapper {
     position: absolute;
     height: 60%;
     width: 20%;
     display: flex;
     justify-content: center;
     align-items: center;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
   }
 
   .car-part1 {
@@ -282,8 +313,8 @@ const StyledWrapper = styled.div`
     top: 2060%;
     left: 125%;
   }
-
-  .package-container {
+  
+  .package-wrapper {
     position: absolute;
     width: 25%;
     height: 80%;
@@ -394,7 +425,7 @@ const StyledWrapper = styled.div`
     animation-play-state: paused;
   }
 
-  .package-container {
+  .package-wrapper {
     transform: translate(0%, 100%);
     animation: package 2s;
     animation-iteration-count: 1;
@@ -418,7 +449,7 @@ const StyledWrapper = styled.div`
     animation-play-state: paused;
   }
 
-  .car-container {
+  .car-wrapper {
     transform: translate(-310%, 8%);
     animation: car 2s ease;
     animation-iteration-count: 1;
@@ -475,37 +506,6 @@ const StyledWrapper = styled.div`
     100% {
       transform: translate(350%, 8%);
     }
-  }
-
-  #trigger {
-    width: 100%;
-    height: 100%;
-    z-index: 10;
-    display: none;
-  }
-
-  #trigger:checked + .btn .package-container,
-  #trigger:checked + .btn .order,
-  #trigger:checked + .btn .done,
-  #trigger:checked + .btn .car-container,
-  #trigger:checked + .btn .package::after,
-  #trigger:checked + .btn .package::before,
-  #trigger:checked + .btn .background {
-    animation-play-state: running;
-  }
-
-  #trigger:not(:checked) + .btn .package-container,
-  #trigger:not(:checked) + .btn .order,
-  #trigger:not(:checked) + .btn .done,
-  #trigger:not(:checked) + .btn .car-container,
-  #trigger:not(:checked) + .btn .package::after,
-  #trigger:not(:checked) + .btn .package::before,
-  #trigger:not(:checked) + .btn .background {
-    animation: none;
-  }
-
-  #trigger:checked + .btn .stars {
-    display: none;
   }
 `;
 
