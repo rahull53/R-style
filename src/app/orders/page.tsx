@@ -12,6 +12,7 @@ export default function OrdersPage() {
     const { user } = useAuth();
     const [orders, setOrders] = useState<OrderData[]>([]);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState('');
 
     useEffect(() => {
         async function fetchOrders() {
@@ -19,9 +20,12 @@ export default function OrdersPage() {
                 // Determine identifier from user object
                 const identifier = user.mobile || user.email || '';
                 if (identifier) {
+                    console.log("OrdersPage: Fetching for", identifier);
                     const result = await getUserOrders(identifier);
                     if (result.success && result.orders) {
                         setOrders(result.orders);
+                    } else if (!result.success) {
+                        setError("Failed to load orders: " + (result.error || 'Unknown error'));
                     }
                 }
             }
@@ -51,12 +55,23 @@ export default function OrdersPage() {
                     <Package color="#ff3f6c" /> My Orders
                 </h2>
 
+                {/* Debug Info */}
+                <div style={{ fontSize: '10px', color: '#333', marginBottom: '10px' }}>
+                    Account: {user?.mobile || user?.email || 'Unknown'} (Verified: {orders.length})
+                </div>
+
+                {error && (
+                    <div className="alert alert-danger mb-4" role="alert">
+                        {error}
+                    </div>
+                )}
+
                 {!user ? (
                     <div className="text-center py-5">
                         <ShoppingBag size={48} color="#666" className="mb-3" />
                         <p style={{ color: '#aaa' }}>Please login to view your orders.</p>
                     </div>
-                ) : orders.length === 0 ? (
+                ) : orders.length === 0 && !error ? (
                     <div className="text-center py-5" style={{ background: '#111', borderRadius: '12px', border: '1px solid #222' }}>
                         <ShoppingBag size={48} color="#666" className="mb-3 mx-auto" style={{ opacity: 0.5 }} />
                         <h4 style={{ fontWeight: 700, color: '#fff' }}>No orders yet</h4>

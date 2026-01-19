@@ -27,6 +27,9 @@ const nextConfig: NextConfig = {
   },
   poweredByHeader: false,
   reactStrictMode: true,
+  compiler: {
+    styledComponents: true,
+  },
 };
 
 export default nextConfig;

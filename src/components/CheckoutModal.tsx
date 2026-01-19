@@ -20,6 +20,7 @@ export default function CheckoutModal({ show, onHide }: CheckoutModalProps) {
     const [step, setStep] = useState<'form' | 'success'>('form');
     const [formData, setFormData] = useState({
         name: '',
+        email: '',
         address: '',
         phone: '',
     });
@@ -29,7 +30,8 @@ export default function CheckoutModal({ show, onHide }: CheckoutModalProps) {
             setFormData(prev => ({
                 ...prev,
                 name: user.name || prev.name,
-                phone: user.mobile || user.email || prev.phone
+                email: user.email || prev.email,
+                phone: user.mobile || prev.phone
             }));
         } else {
             // Load saved user data from old checkout (fallback)
@@ -45,28 +47,72 @@ export default function CheckoutModal({ show, onHide }: CheckoutModalProps) {
         return acc + (parseFloat(priceStr) * item.quantity);
     }, 0);
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
+    // Unified handler for order placement
+    const handlePlaceOrder = async () => {
+        // Validation: Strict check for empty strings
+        if (!formData.name?.trim() || !formData.email?.trim() || !formData.address?.trim()) {
+            alert("Please fill in Name, Email and Address.");
+            return;
+        }
+
+        // Email Validation
+        if (!formData.email.includes('@')) {
+            alert("Please enter a valid Email Address.");
+            return;
+        }
+
+        // Strict Mobile Number Validation (10 digits)
+        const phoneRegex = /^\d{10}$/;
+        if (!formData.phone?.trim() || !phoneRegex.test(formData.phone.replace(/\D/g, ''))) {
+            alert("Please enter a valid 10-digit Contact Mobile Number.");
+            return;
+        }
 
         // Save user details for next time
         localStorage.setItem('user_info', JSON.stringify(formData));
 
         // 1. Create Order Data
-        const orderData = {
-            customer: formData,
+        const identifier = user?.mobile || user?.email || 'Guest'; // This uses the ID for the database Key
+
+        // Firestore craps out on 'undefined', so we sanitize the object
+        const rawOrderData = {
+            customer: {
+                name: formData.name,
+                email: formData.email,
+                address: formData.address,
+                phone: identifier, // CRITICAL: This must match the field 'getUserOrders' queries (identifier)
+                mobile: formData.phone, // Real Contact Mobile
+                contact: formData.phone, // Redundant but clear
+                accountEmail: user?.email || ''
+            },
             items: cartItems,
             total: `₹${total}`,
             status: 'Pending'
         };
+        const orderData = JSON.parse(JSON.stringify(rawOrderData));
 
-        // 2. Save to Admin History (Simulation)
-        addOrder(orderData);
+        // 2. Save to Database
+        const result = await addOrder(orderData);
+
+        if (!result) {
+            alert("Order failed! Check console for details.");
+            return;
+        }
 
         // 3. Construct WhatsApp Message
         const itemsList = cartItems.map((item, i) => `${i + 1}. ${item.name} x${item.quantity} (${item.price}) [Size: ${item.size || 'N/A'}]`).join('%0a');
-        const message = `*R Style - New Order* 🛍️%0a%0a*Customer:* ${formData.name}%0a*Address:* ${formData.address}%0a*Phone:* ${formData.phone}%0a%0a*Items:*%0a${itemsList}%0a%0a*Total: ₹${total}*`;
 
-        // 4. Open WhatsApp (Store Number: 918758424155)
+        const message = `*R Style - New Order* 🛍️%0a%0a` +
+            `*Customer Details:*%0a` +
+            `Name: ${formData.name}%0a` +
+            `Email: ${formData.email}%0a` +
+            `Address: ${formData.address}%0a` +
+            `Phone: ${formData.phone}%0a` +
+            `User ID: ${identifier}%0a` +
+            `*Items:*%0a${itemsList}%0a%0a` +
+            `*Total: ₹${total}*`;
+
+        // 4. Open WhatsApp
         const storeNumber = "918758424155";
         window.open(`https://wa.me/${storeNumber}?text=${message}`, '_blank');
 
@@ -86,6 +132,7 @@ export default function CheckoutModal({ show, onHide }: CheckoutModalProps) {
 
     return (
         <Modal show={show} onHide={handleClose} centered className="auth-modal-transparent">
+            {/* ... Header ... */}
             <Modal.Header closeButton style={{
                 background: '#111111',
                 borderBottom: '1px solid rgba(255, 63, 108, 0.3)',
@@ -98,6 +145,7 @@ export default function CheckoutModal({ show, onHide }: CheckoutModalProps) {
 
             <Modal.Body style={{ padding: '24px', background: '#000000', color: '#ffffff' }}>
                 {!user ? (
+                    // ... Login Prompt ...
                     <div className="text-center py-4">
                         <div className="mb-3">
                             <Lock size={48} color="#ff3f6c" />
@@ -124,7 +172,7 @@ export default function CheckoutModal({ show, onHide }: CheckoutModalProps) {
                 ) : (
                     <>
                         {step === 'form' ? (
-                            <Form onSubmit={handleSubmit}>
+                            <Form onSubmit={(e) => e.preventDefault()}>
                                 <Form.Group className="mb-3">
                                     <Form.Label style={{ fontWeight: 600, color: '#ffffff', fontSize: '14px' }}>Full Name</Form.Label>
                                     <Form.Control
@@ -134,6 +182,19 @@ export default function CheckoutModal({ show, onHide }: CheckoutModalProps) {
                                         style={{ background: '#111111', border: '1px solid #333', borderRadius: '8px', padding: '12px', color: '#fff' }}
                                         value={formData.name}
                                         onChange={e => setFormData({ ...formData, name: e.target.value })}
+                                        className="custom-input"
+                                    />
+                                </Form.Group>
+
+                                <Form.Group className="mb-3">
+                                    <Form.Label style={{ fontWeight: 600, color: '#ffffff', fontSize: '14px' }}>Your Email</Form.Label>
+                                    <Form.Control
+                                        type="email"
+                                        required
+                                        placeholder="Enter your email"
+                                        style={{ background: '#111111', border: '1px solid #333', borderRadius: '8px', padding: '12px', color: '#fff' }}
+                                        value={formData.email}
+                                        onChange={e => setFormData({ ...formData, email: e.target.value })}
                                         className="custom-input"
                                     />
                                 </Form.Group>
@@ -152,14 +213,19 @@ export default function CheckoutModal({ show, onHide }: CheckoutModalProps) {
                                 </Form.Group>
 
                                 <Form.Group className="mb-4">
-                                    <Form.Label style={{ fontWeight: 600, color: '#ffffff', fontSize: '14px' }}>Phone Number / Email</Form.Label>
+                                    <Form.Label style={{ fontWeight: 600, color: '#ffffff', fontSize: '14px' }}>Contact Mobile Number</Form.Label>
                                     <Form.Control
-                                        type="text"
+                                        type="tel"
+                                        maxLength={10}
                                         required
-                                        readOnly={!!(user?.mobile || user?.email)} // Verified user cannot change ID
-                                        style={{ background: '#1a1a1a', border: '1px solid #333', borderRadius: '8px', padding: '12px', color: '#ff3f6c', opacity: 0.8 }}
+                                        placeholder="Enter 10-digit mobile number"
+                                        style={{ background: '#111111', border: '1px solid #333', borderRadius: '8px', padding: '12px', color: '#fff' }}
                                         value={formData.phone}
-                                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, phone: e.target.value })}
+                                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                                            const val = e.target.value.replace(/\D/g, '');
+                                            setFormData({ ...formData, phone: val });
+                                        }}
+                                        className="custom-input"
                                     />
                                 </Form.Group>
 
@@ -178,23 +244,7 @@ export default function CheckoutModal({ show, onHide }: CheckoutModalProps) {
                                 </div>
 
                                 <div style={{ display: 'flex', justifyContent: 'center', marginTop: '16px' }}>
-                                    <PlaceOrderButton onOrderPlaced={() => {
-                                        // Build WhatsApp message
-                                        const itemsList = cartItems.map(item =>
-                                            `- ${item.name} (x${item.quantity}) - ${item.price}`
-                                        ).join('%0A');
-
-                                        const message = `🛍️ *New Order from R Style*%0A%0A` +
-                                            `*Customer Details:*%0A` +
-                                            `Name: ${formData.name}%0A` +
-                                            `Phone: ${formData.phone}%0A` +
-                                            `Address: ${formData.address}%0A%0A` +
-                                            `*Order Items:*%0A${itemsList}%0A%0A` +
-                                            `*Total: ₹${total}*`;
-
-                                        window.open(`https://wa.me/918758424155?text=${message}`, '_blank');
-                                        setStep('success');
-                                    }} />
+                                    <PlaceOrderButton onOrderPlaced={handlePlaceOrder} />
                                 </div>
                             </Form >
                         ) : (

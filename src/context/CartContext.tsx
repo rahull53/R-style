@@ -19,7 +19,7 @@ interface CartContextType {
     removeFromCart: (id: number) => void;
     updateQuantity: (id: number, delta: number) => void;
     clearCart: () => void;
-    addOrder: (order: any) => void;
+    addOrder: (order: any) => Promise<boolean>;
     // Wishlist
     wishlistItems: CartItem[];
     addToWishlist: (item: Omit<CartItem, 'quantity'>) => void;
@@ -93,20 +93,29 @@ export function CartProvider({ children }: { children: ReactNode }) {
     }, []);
 
     const addOrder = useCallback(async (order: any) => {
-        // 1. Save to Firebase (Real Persistence)
-        // Dynamically import to safely use in client context without heavy initial load if desired, 
-        // but here standard import is fine. For now let's just call it.
-        const { createOrder } = await import('@/lib/db/orders');
-        await createOrder(order);
+        try {
+            // 1. Save to Firebase (Real Persistence)
+            const { createOrder } = await import('@/lib/db/orders');
+            const result = await createOrder(order);
 
-        // 2. Keep local admin simulation for now (optional, can be removed later)
-        const existingOrders = JSON.parse(localStorage.getItem('admin_orders') || '[]');
-        const newOrder = { ...order, id: Date.now(), date: new Date().toLocaleString() };
-        existingOrders.unshift(newOrder);
-        localStorage.setItem('admin_orders', JSON.stringify(existingOrders));
+            if (!result.success) {
+                console.error("Failed to save order to database:", result.error);
+                return false;
+            }
 
-        // 3. Clear cart
-        clearCart();
+            // 2. Keep local admin simulation for now (optional, can be removed later)
+            const existingOrders = JSON.parse(localStorage.getItem('admin_orders') || '[]');
+            const newOrder = { ...order, id: result.id || Date.now(), date: new Date().toLocaleString() };
+            existingOrders.unshift(newOrder);
+            localStorage.setItem('admin_orders', JSON.stringify(existingOrders));
+
+            // 3. Clear cart
+            clearCart();
+            return true;
+        } catch (err) {
+            console.error("Unexpected error in addOrder:", err);
+            return false;
+        }
     }, [clearCart]);
 
     const value = useMemo(() => ({

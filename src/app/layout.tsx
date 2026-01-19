@@ -6,6 +6,7 @@ import { CartProvider } from "@/context/CartContext";
 import { UIProvider } from "@/context/UIContext";
 import { AuthProvider } from "@/context/AuthContext";
 import ClientModals from "@/components/ClientModals";
+import StyledComponentsRegistry from "@/lib/registry";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,14 +23,16 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning style={{ scrollBehavior: 'smooth', backgroundColor: '#000000' }} data-scroll-behavior="smooth">
       <body className={inter.className} suppressHydrationWarning style={{ backgroundColor: '#000000' }}>
-        <AuthProvider>
-          <UIProvider>
-            <CartProvider>
-              {children}
-              <ClientModals />
-            </CartProvider>
-          </UIProvider>
-        </AuthProvider>
+        <StyledComponentsRegistry>
+          <AuthProvider>
+            <UIProvider>
+              <CartProvider>
+                {children}
+                <ClientModals />
+              </CartProvider>
+            </UIProvider>
+          </AuthProvider>
+        </StyledComponentsRegistry>
       </body>
     </html>
   );

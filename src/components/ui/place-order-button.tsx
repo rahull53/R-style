@@ -17,10 +17,10 @@ const PlaceOrderButton = ({ onOrderPlaced }: PlaceOrderButtonProps) => {
       setStatus('animating');
       setTimeout(() => {
         setStatus('done');
+        onOrderPlaced?.(); // Auto-trigger when animation completes
       }, 2000); // match animation duration
-    } else if (status === 'done') {
-      onOrderPlaced?.();
     }
+    // Removed the 'else if status === done' block so double click isn't needed/allowed
   };
 
   return (
