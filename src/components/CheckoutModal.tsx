@@ -152,7 +152,7 @@ export default function CheckoutModal({ show, onHide }: CheckoutModalProps) {
                         </div>
                         <h5 style={{ fontWeight: 700, color: '#ffffff', marginBottom: '12px' }}>Login Required</h5>
                         <p style={{ color: '#aaaaaa', fontSize: '14px', marginBottom: '24px' }}>
-                            Please login with your mobile number to place an order.
+                            Please login with your mobile number or Gmail to place an order.
                         </p>
                         <Button
                             onClick={handleLoginClick}
