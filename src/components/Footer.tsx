@@ -37,7 +37,6 @@ export default function Footer() {
 
                     <Col lg={3} md={6} xs={6}>
                         <h6 className="footer-heading">Useful Links</h6>
-                        <Link href="/admin" className="footer-link">Admin Dashboard</Link>
                         <Link href="#" className="footer-link">Track Order</Link>
                         <Link href="#" className="footer-link">Size Guide</Link>
                         <Link href="#" className="footer-link">Returns</Link>
