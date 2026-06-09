@@ -520,24 +520,36 @@ section {
 
 // Modal Styles (Myntra)
 .modal-myntra {
+    .modal-dialog {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+        min-height: 100vh;
+    }
+
     .modal-content {
-        border-radius: 4px;
+        border-radius: 8px;
         border: none;
+        background: transparent !important;
+        box-shadow: none;
     }
 
     .modal-header {
-        border-bottom: 1px solid var(--myntra-border);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         padding: 16px 20px;
+        background: #111111;
 
         .modal-title {
             font-weight: 700;
             font-size: 16px;
-            color: var(--myntra-text);
+            color: #ffffff;
         }
     }
 
     .modal-body {
         padding: 20px;
+        background: #111111;
     }
 }
 

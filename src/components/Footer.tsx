@@ -58,7 +58,7 @@ export default function Footer() {
                 </Row>
 
                 <div className="footer-bottom">
-                    © 2025 R Style. All rights reserved.
+                    © 2026 R Style. All rights reserved.
                 </div>
             </Container>
         </motion.footer>

@@ -1,7 +1,5 @@
 "use client";
 
-import Modal from 'react-bootstrap/Modal';
-import Form from 'react-bootstrap/Form';
 import { useUI } from '@/context/UIContext';
 import { Search, X } from 'lucide-react';
 import { useState } from 'react';
@@ -25,109 +23,178 @@ export default function SearchModal() {
         setQuery('');
     };
 
-    return (
-        <Modal
-            show={isSearchOpen}
-            onHide={handleClose}
-            centered
-            className="modal-myntra"
-        >
-            <motion.div
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3 }}
-                style={{ background: '#ffffff', borderRadius: '4px', overflow: 'hidden' }}
-            >
-                <div style={{
-                    padding: '16px 20px',
-                    borderBottom: '1px solid #d4d5d9',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '12px'
-                }}>
-                    <Search color="#696b79" size={20} />
-                    <Form.Control
-                        autoFocus
-                        type="text"
-                        placeholder="Search for fashion items..."
-                        className="border-0 shadow-none fs-5 p-0"
-                        style={{ color: '#282c3f', fontWeight: 500 }}
-                        value={query}
-                        onChange={(e) => setQuery(e.target.value)}
-                    />
-                    <button
-                        onClick={handleClose}
-                        style={{ background: 'none', border: 'none', padding: '4px' }}
-                    >
-                        <X color="#282c3f" size={20} />
-                    </button>
-                </div>
+    if (!isSearchOpen) return null;
 
-                <div style={{ padding: '8px 0', maxHeight: '400px', overflowY: 'auto' }}>
-                    <AnimatePresence>
-                        {filtered.length > 0 ? (
-                            filtered.map(item => (
-                                <motion.div
-                                    layout
-                                    key={item.id}
-                                    initial={{ opacity: 0, x: -10 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    exit={{ opacity: 0, scale: 0.95 }}
-                                    transition={{ duration: 0.2 }}
-                                >
-                                    <Link
-                                        href={`/product/${item.id}`}
-                                        className="d-flex justify-content-between align-items-center text-decoration-none p-3 hover-gray"
-                                        style={{ borderBottom: '1px solid #f5f5f6' }}
-                                        onClick={handleClose}
-                                    >
-                                        <div className="d-flex align-items-center gap-3">
-                                            <img
-                                                src={item.image}
-                                                alt={item.name}
-                                                style={{ width: '48px', height: '48px', objectFit: 'cover', borderRadius: '4px' }}
-                                            />
-                                            <div>
-                                                <div style={{ fontSize: '12px', fontWeight: 700, color: '#282c3f' }}>{item.brand}</div>
-                                                <div style={{ fontSize: '14px', color: '#696b79' }}>{item.name}</div>
-                                            </div>
-                                        </div>
-                                        <span style={{ fontWeight: 700, color: '#ff3f6c' }}>₹{item.price}</span>
-                                    </Link>
-                                </motion.div>
-                            ))
-                        ) : query ? (
-                            <div style={{ padding: '40px 20px', textAlign: 'center', color: '#94969f' }}>
-                                <Search size={40} style={{ opacity: 0.2, marginBottom: '12px' }} />
-                                <p>No results found for "{query}"</p>
-                            </div>
-                        ) : (
-                            <div style={{ padding: '20px', color: '#94969f', fontSize: '13px' }}>
-                                <p style={{ fontWeight: 700, color: '#282c3f', textTransform: 'uppercase', marginBottom: '12px' }}>
-                                    Trending Product Searches
-                                </p>
-                                <div className="d-flex flex-wrap gap-2">
-                                    {["Earrings", "Watches", "Sunglasses", "Wallets"].map(tag => (
-                                        <span
-                                            key={tag}
-                                            onClick={() => setQuery(tag)}
-                                            style={{
-                                                padding: '6px 16px',
-                                                background: '#f5f5f6',
-                                                borderRadius: '20px',
-                                                cursor: 'pointer',
-                                                color: '#282c3f'
-                                            }}
+    return (
+        <AnimatePresence>
+            {isSearchOpen && (
+                <>
+                    {/* Backdrop overlay */}
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.2 }}
+                        onClick={handleClose}
+                        style={{
+                            position: 'fixed',
+                            top: 0,
+                            left: 0,
+                            right: 0,
+                            bottom: 0,
+                            background: 'rgba(0, 0, 0, 0.7)',
+                            backdropFilter: 'blur(4px)',
+                            zIndex: 9998,
+                        }}
+                    />
+
+                    {/* Centered search box */}
+                    <motion.div
+                        initial={{ opacity: 0, y: -30, scale: 0.95 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: -20, scale: 0.95 }}
+                        transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                        style={{
+                            position: 'fixed',
+                            top: '15%',
+                            left: '50%',
+                            transform: 'translateX(-50%)',
+                            width: '90%',
+                            maxWidth: '560px',
+                            background: '#111111',
+                            borderRadius: '12px',
+                            overflow: 'hidden',
+                            border: '1px solid rgba(255, 63, 108, 0.25)',
+                            boxShadow: '0 20px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(255, 63, 108, 0.08)',
+                            zIndex: 9999,
+                        }}
+                    >
+                        {/* Search input header */}
+                        <div style={{
+                            padding: '16px 20px',
+                            borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '12px',
+                        }}>
+                            <Search color="rgba(255,255,255,0.4)" size={20} />
+                            <input
+                                autoFocus
+                                type="text"
+                                placeholder="Search for fashion items..."
+                                style={{
+                                    flex: 1,
+                                    color: '#ffffff',
+                                    fontWeight: 500,
+                                    fontSize: '16px',
+                                    background: 'transparent',
+                                    border: 'none',
+                                    outline: 'none',
+                                }}
+                                value={query}
+                                onChange={(e) => setQuery(e.target.value)}
+                            />
+                            <button
+                                onClick={handleClose}
+                                style={{
+                                    background: 'rgba(255,255,255,0.06)',
+                                    border: 'none',
+                                    padding: '6px',
+                                    cursor: 'pointer',
+                                    borderRadius: '6px',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                }}
+                            >
+                                <X color="rgba(255,255,255,0.5)" size={18} />
+                            </button>
+                        </div>
+
+                        {/* Results area */}
+                        <div style={{ maxHeight: '400px', overflowY: 'auto' }}>
+                            <AnimatePresence>
+                                {filtered.length > 0 ? (
+                                    filtered.map(item => (
+                                        <motion.div
+                                            layout
+                                            key={item.id}
+                                            initial={{ opacity: 0, x: -10 }}
+                                            animate={{ opacity: 1, x: 0 }}
+                                            exit={{ opacity: 0, scale: 0.95 }}
+                                            transition={{ duration: 0.2 }}
                                         >
-                                            {tag}
-                                        </span>
-                                    ))}
-                                </div>
-                            </div>
-                        )}
-                    </AnimatePresence>
-                </div>
-            </motion.div>
-        </Modal>
+                                            <Link
+                                                href={`/product/${item.id}`}
+                                                className="d-flex justify-content-between align-items-center text-decoration-none"
+                                                style={{
+                                                    padding: '12px 20px',
+                                                    borderBottom: '1px solid rgba(255,255,255,0.04)',
+                                                    transition: 'background 0.2s',
+                                                }}
+                                                onClick={handleClose}
+                                                onMouseEnter={(e) => (e.currentTarget.style.background = 'rgba(255,255,255,0.04)')}
+                                                onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
+                                            >
+                                                <div className="d-flex align-items-center gap-3">
+                                                    <img
+                                                        src={item.image}
+                                                        alt={item.name}
+                                                        style={{ width: '48px', height: '48px', objectFit: 'cover', borderRadius: '6px' }}
+                                                    />
+                                                    <div>
+                                                        <div style={{ fontSize: '13px', fontWeight: 700, color: '#ffffff' }}>{item.brand}</div>
+                                                        <div style={{ fontSize: '14px', color: 'rgba(255,255,255,0.5)' }}>{item.name}</div>
+                                                    </div>
+                                                </div>
+                                                <span style={{ fontWeight: 700, color: '#ff3f6c', fontSize: '14px' }}>₹{item.price}</span>
+                                            </Link>
+                                        </motion.div>
+                                    ))
+                                ) : query ? (
+                                    <div style={{ padding: '40px 20px', textAlign: 'center', color: 'rgba(255,255,255,0.3)' }}>
+                                        <Search size={36} style={{ opacity: 0.15, marginBottom: '12px' }} />
+                                        <p style={{ margin: 0, fontSize: '14px' }}>No results found for &quot;{query}&quot;</p>
+                                    </div>
+                                ) : (
+                                    <div style={{ padding: '20px', fontSize: '13px' }}>
+                                        <p style={{
+                                            fontWeight: 700,
+                                            color: '#ff3f6c',
+                                            textTransform: 'uppercase',
+                                            marginBottom: '12px',
+                                            letterSpacing: '0.5px',
+                                            fontSize: '11px',
+                                        }}>
+                                            Trending Product Searches
+                                        </p>
+                                        <div className="d-flex flex-wrap gap-2">
+                                            {["Earrings", "Watches", "Sunglasses", "Wallets"].map(tag => (
+                                                <span
+                                                    key={tag}
+                                                    onClick={() => setQuery(tag)}
+                                                    style={{
+                                                        padding: '6px 16px',
+                                                        background: 'rgba(255, 63, 108, 0.08)',
+                                                        border: '1px solid rgba(255, 63, 108, 0.2)',
+                                                        borderRadius: '20px',
+                                                        cursor: 'pointer',
+                                                        color: 'rgba(255,255,255,0.8)',
+                                                        fontSize: '13px',
+                                                        transition: 'all 0.2s',
+                                                    }}
+                                                >
+                                                    {tag}
+                                                </span>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+                            </AnimatePresence>
+                        </div>
+                    </motion.div>
+                </>
+            )}
+        </AnimatePresence>
     );
 }

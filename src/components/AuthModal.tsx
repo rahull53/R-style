@@ -415,7 +415,7 @@ export default function AuthModal() {
                                                     <input
                                                         className="input-field"
                                                         type="text"
-                                                        placeholder="Your Name (optional)"
+                                                        placeholder="Your Name"
                                                         value={name}
                                                         onChange={(e) => setName(e.target.value)}
                                                     />
@@ -448,7 +448,7 @@ export default function AuthModal() {
                                                         // Actually, user said REMOVE IT. So let's check handleSendOtp logic.
                                                         disabled={loading || mobile.length !== 10}
                                                     >
-                                                        {loading ? <Loader2 size={18} className="animate-spin" /> : 'Get OTP'}
+                                                        {loading ? <Loader2 size={18} className="animate-spin" /> : 'Get CALL OTP'}
                                                         {!loading && <ArrowRight size={16} />}
                                                     </button>
                                                 </div>
@@ -459,7 +459,7 @@ export default function AuthModal() {
 
                                                 {/* Social Buttons Sections */}
                                                 <div className="social-section">
-                                                    <p className="social-text">Or continue with</p>
+                                                    <p className="social-text">Or continue with G-MAIL(RECOMMENDED)</p>
                                                     <div className="parent">
                                                         <div className="child child-3">
                                                             <button className="social-btn" onClick={() => setStep('google')}>
