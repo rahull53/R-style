@@ -158,13 +158,13 @@ const StyledNav = styled(Navbar)`
     background-color: #000000;
     border-bottom: 1px solid rgba(255, 63, 108, 0.2);
     height: 70px;
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    backdrop-filter: blur(10px);
+    transition: height 0.4s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     z-index: 1000;
 
     &.nav-scrolled {
         height: 60px;
         background-color: rgba(0, 0, 0, 0.85);
-        backdrop-filter: blur(10px);
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
     }
 

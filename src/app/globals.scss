@@ -21,19 +21,15 @@
 /* Force full width without scrollbar gap */
 html {
     overflow-x: hidden;
-    overflow-y: scroll;
-    /* Always show scrollbar space */
-    scrollbar-gutter: stable;
     /* Prevent layout shift */
     background-color: #000000 !important;
 }
 
 body {
-    overflow-x: hidden;
     background-color: #000000 !important;
     margin: 0;
     padding: 0;
-    width: 100vw;
+    width: 100%;
     max-width: 100%;
 }
 
@@ -71,8 +67,7 @@ html {
 main,
 body>div {
     width: 100%;
-    max-width: 100vw;
-    overflow-x: hidden;
+    max-width: 100%;
 }
 
 // Force everything to have black background
