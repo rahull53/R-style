@@ -22,7 +22,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning style={{ backgroundColor: '#000000' }}>
-      <body className={inter.className} suppressHydrationWarning style={{ backgroundColor: '#000000' }}>
+      <body className={inter.className} suppressHydrationWarning style={{ backgroundColor: '#000000', margin: 0, padding: 0 }}>
         <StyledComponentsRegistry>
           <AuthProvider>
             <UIProvider>

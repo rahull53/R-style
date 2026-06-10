@@ -103,7 +103,7 @@ export default function Navigation() {
                 </div>
 
                 {/* Right: Icons */}
-                <div className="d-flex align-items-center gap-3 gap-lg-4">
+                <div className="d-flex align-items-center gap-2 gap-lg-4" style={{ flexShrink: 0 }}>
                     {/* Search Icon (Mobile Only) */}
                     <button className="icon-btn d-lg-none" onClick={() => setIsSearchOpen(true)}>
                         <Search size={22} color="#ffffff" />

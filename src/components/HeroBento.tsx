@@ -103,8 +103,8 @@ export default function HeroBento() {
                 <Container className="py-8 md:py-12" style={{ backgroundColor: '#000000' }}>
                     <div className="section-header mb-6">
                         <motion.h2
-                            initial={{ opacity: 0, x: -20 }}
-                            whileInView={{ opacity: 1, x: 0 }}
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.5 }}
                             style={{ color: '#ffffff' }}
@@ -154,8 +154,8 @@ export default function HeroBento() {
                     <Row className="g-4">
                         <Col md={6}>
                             <motion.div
-                                initial={{ opacity: 0, x: -50 }}
-                                whileInView={{ opacity: 1, x: 0 }}
+                                initial={{ opacity: 0, y: 30 }}
+                                whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ duration: 0.6 }}
                                 className="deal-card deal-fest"
@@ -168,10 +168,10 @@ export default function HeroBento() {
                         </Col>
                         <Col md={6}>
                             <motion.div
-                                initial={{ opacity: 0, x: 50 }}
-                                whileInView={{ opacity: 1, x: 0 }}
+                                initial={{ opacity: 0, y: 30 }}
+                                whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
-                                transition={{ duration: 0.6 }}
+                                transition={{ duration: 0.6, delay: 0.2 }}
                                 className="deal-card deal-new"
                                 style={{ background: 'linear-gradient(45deg, #111, #333)', border: '1px solid rgba(255, 255, 255, 0.1)' }}
                             >
