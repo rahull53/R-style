@@ -7,6 +7,7 @@ import { useAuth } from '@/context/AuthContext';
 import { Phone, Shield, ArrowRight, X, Loader2, User, Mail } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import styled from 'styled-components';
+import toast from 'react-hot-toast';
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -329,6 +330,10 @@ export default function AuthModal() {
 
             if (data.success) {
                 login(mobile || email, name);
+                toast.success('Logged in successfully!', {
+                    icon: '🚀',
+                    style: { background: '#333', color: '#fff', border: '1px solid #ff3f6c' }
+                });
                 handleClose();
             } else {
                 throw new Error(data.error || 'Invalid OTP. Please check and try again.');

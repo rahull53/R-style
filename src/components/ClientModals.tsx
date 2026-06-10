@@ -12,6 +12,7 @@ const MobileMenu = dynamic(() => import("@/components/MobileMenu"), { ssr: false
 
 import { useCart } from '@/context/CartContext';
 import { useUI } from '@/context/UIContext';
+import { Toaster } from 'react-hot-toast';
 
 export default function ClientModals() {
     const { isCheckoutOpen, setIsCheckoutOpen } = useUI();
@@ -25,6 +26,7 @@ export default function ClientModals() {
             <ProfileModal />
             <MobileMenu />
             <CheckoutModal show={isCheckoutOpen} onHide={() => setIsCheckoutOpen(false)} />
+            <Toaster position="bottom-center" />
         </>
     );
 }

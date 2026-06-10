@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useState, ReactNode, useEffect, useCallback, useMemo } from 'react';
 import { useAsyncStorage } from '@/hooks/useAsyncStorage';
+import toast from 'react-hot-toast';
 
 export interface CartItem {
     id: number;
@@ -50,14 +51,19 @@ export function CartProvider({ children }: { children: ReactNode }) {
     }, [cartItems, wishlistItems, setItemAsync]);
 
     const addToCart = useCallback((item: Omit<CartItem, 'quantity'>) => {
-        setCartItems(prev => {
-            const exists = prev.find(i => i.id === item.id && i.size === item.size);
-            if (exists) {
-                return prev.map(i => i.id === item.id && i.size === item.size ? { ...i, quantity: i.quantity + 1 } : i);
-            }
-            return [...prev, { ...item, quantity: 1 }];
-        });
-    }, []);
+        const exists = cartItems.find(i => i.id === item.id && i.size === item.size);
+        if (exists) {
+            setCartItems(prev => prev.map(i => i.id === item.id && i.size === item.size ? { ...i, quantity: i.quantity + 1 } : i));
+            toast.success(`Increased ${item.name} quantity in cart`, {
+                style: { background: '#333', color: '#fff', border: '1px solid #ff3f6c' }
+            });
+        } else {
+            setCartItems(prev => [...prev, { ...item, quantity: 1 }]);
+            toast.success(`${item.name} added to cart`, {
+                style: { background: '#333', color: '#fff', border: '1px solid #ff3f6c' }
+            });
+        }
+    }, [cartItems]);
 
     const removeFromCart = useCallback((id: number) => {
         setCartItems(prev => prev.filter(item => item.id !== id));
@@ -76,13 +82,20 @@ export function CartProvider({ children }: { children: ReactNode }) {
     }, []);
 
     const addToWishlist = useCallback((item: Omit<CartItem, 'quantity'>) => {
-        setWishlistItems(prev => {
-            if (!prev.find(i => i.id === item.id)) {
-                return [...prev, { ...item, quantity: 1 }];
-            }
-            return prev;
-        });
-    }, []);
+        const exists = wishlistItems.find(i => i.id === item.id);
+        if (!exists) {
+            setWishlistItems(prev => [...prev, { ...item, quantity: 1 }]);
+            toast.success(`${item.name} added to wishlist`, {
+                icon: '❤️',
+                style: { background: '#333', color: '#fff', border: '1px solid #ff3f6c' }
+            });
+        } else {
+            toast('Item already in wishlist', {
+                icon: 'ℹ️',
+                style: { background: '#333', color: '#fff' }
+            });
+        }
+    }, [wishlistItems]);
 
     const removeFromWishlist = useCallback((id: number) => {
         setWishlistItems(prev => prev.filter(item => item.id !== id));
